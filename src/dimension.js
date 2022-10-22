@@ -1,4 +1,5 @@
 const BOARD_RATIO = 9 / 16;
+const MATTER_MARGIN = 8;
 
 function maxBoardDimension(maxWidth, maxHeight) {
     let boardWidth = 0;
@@ -10,6 +11,13 @@ function maxBoardDimension(maxWidth, maxHeight) {
     } else {
         boardHeight = maxHeight;
         boardWidth = Math.floor(boardHeight * BOARD_RATIO);
+    }
+
+    if (boardWidth > MATTER_MARGIN * 2) {
+        boardWidth -= MATTER_MARGIN * 2;
+    }
+    if (boardHeight > MATTER_MARGIN * 2) {
+        boardHeight -= MATTER_MARGIN * 2;
     }
 
     return { boardWidth, boardHeight };
