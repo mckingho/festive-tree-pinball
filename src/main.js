@@ -12,10 +12,14 @@ function resizeBoard() {
 
     // init object / resize object's render
     if (!object) {
-        object = new MatterObject(document.body, boardWidth, boardHeight);
+        let board = document.querySelector('#board');
+        object = new MatterObject(board, boardWidth, boardHeight);
     } else {
         object.resizeRender(boardWidth, boardHeight);
     }
+
+    let boardContainer = document.querySelector('#board-container');
+    boardContainer.style.width = boardWidth + 'px';
 }
 
 window.addEventListener('load', resizeBoard);
