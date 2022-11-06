@@ -25,4 +25,5 @@ function maxBoardDimension(maxWidth, maxHeight) {
 
 export {
     maxBoardDimension,
+    MATTER_MARGIN,
 };

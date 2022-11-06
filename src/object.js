@@ -21,6 +21,7 @@ class MatterObject {
                 options: {
                     width,
                     height,
+                    wireframeBackground: 'transparent',
                 }
             });
 
@@ -46,6 +47,9 @@ class MatterObject {
         this.render.options.height = height;
         this.render.canvas.width = width;
         this.render.canvas.height = height;
+    }
+
+    buildEngine() {
     }
 }
 

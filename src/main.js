@@ -1,4 +1,4 @@
-import { maxBoardDimension } from './dimension.js';
+import { maxBoardDimension, MATTER_MARGIN } from './dimension.js';
 import MatterObject from './object.js';
 
 // max full board size
@@ -18,8 +18,18 @@ function resizeBoard() {
         object.resizeRender(boardWidth, boardHeight);
     }
 
-    let boardContainer = document.querySelector('#board-container');
+    // adjust board position
+    let boardContainer = document.getElementById('board-container');
     boardContainer.style.width = boardWidth + 'px';
+    let boardBackground = document.getElementById('board-background');
+    boardBackground.style.width = boardWidth + 'px';
+    boardBackground.style.height = boardHeight + 'px';
+    let board = document.getElementById('board');
+    let marginTopOffset = boardHeight + MATTER_MARGIN / 2;
+    board.style.marginTop = '-' + marginTopOffset + 'px';
+
+    // rebuild
+    object.buildEngine();
 }
 
 window.addEventListener('load', resizeBoard);
