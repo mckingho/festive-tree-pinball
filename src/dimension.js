@@ -23,7 +23,13 @@ function maxBoardDimension(maxWidth, maxHeight) {
     return { boardWidth, boardHeight };
 }
 
+// calculate the frame thickness of board
+function frameThickness(width) {
+    return Math.max(1, Math.floor(width / 100));
+}
+
 export {
     maxBoardDimension,
+    frameThickness,
     MATTER_MARGIN,
 };
