@@ -1,5 +1,7 @@
 const BOARD_RATIO = 9 / 16;
 const MATTER_MARGIN = 8;
+const MIN_FRAME_THICKNESS = 16;
+const MIN_BALL_RADIUS = 5;
 
 function maxBoardDimension(maxWidth, maxHeight) {
     let boardWidth = 0;
@@ -25,11 +27,17 @@ function maxBoardDimension(maxWidth, maxHeight) {
 
 // calculate the frame thickness of board
 function frameThickness(width) {
-    return Math.max(1, Math.floor(width / 100));
+    return Math.max(MIN_FRAME_THICKNESS, Math.floor(width / 100));
+}
+
+// calculate the ball radius, scaling same with frame thickness
+function ballRadius(width) {
+    return Math.max(MIN_BALL_RADIUS, Math.floor(width / 100));
 }
 
 export {
     maxBoardDimension,
     frameThickness,
+    ballRadius,
     MATTER_MARGIN,
 };

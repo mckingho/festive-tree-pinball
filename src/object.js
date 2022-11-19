@@ -1,4 +1,4 @@
-import { frameThickness } from './dimension.js';
+import { frameThickness, ballRadius } from './dimension.js';
 
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
@@ -67,6 +67,10 @@ class MatterObject {
         els.push(Bodies.rectangle(w / 2, frT / 2, w - frT * 2, frT, { isStatic: true }));
         els.push(Bodies.rectangle(w - frT / 2, h / 2, frT, h - frT * 2, { isStatic: true }));
         els.push(Bodies.rectangle(w / 2, h - frT / 2, w - frT * 2, frT, { isStatic: true }));
+
+        // ball
+        let r = ballRadius(w);
+        els.push(Bodies.circle(50, 50, r, { restitution: 1 }));
 
         Composite.add(this.engine.world, els);
     }
