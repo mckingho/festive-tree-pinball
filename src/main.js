@@ -1,16 +1,19 @@
-import { maxBoardDimension, MATTER_MARGIN } from './dimension.js';
+import { maxBoardDimension, boardControllerHeight, MATTER_MARGIN } from './dimension.js';
 import MatterObject from './object.js';
 import ObjectBackground from './object-background.js';
 
 // max full board size
 let boardWidth = 0;
 let boardHeight = 0;
+let controllerHeight = 0;
 
 let object;
 let objectBg; // object's background
 
 function resizeBoard() {
     ({ boardWidth, boardHeight } = maxBoardDimension(window.innerWidth, window.innerHeight));
+    // adjust board height for controller
+    ({ boardHeight, controllerHeight } = boardControllerHeight(boardHeight));
 
     // init object / resize object's render
     if (!object) {
@@ -32,6 +35,11 @@ function resizeBoard() {
     let board = document.getElementById('board');
     let marginTopOffset = boardHeight + MATTER_MARGIN / 2;
     board.style.marginTop = '-' + marginTopOffset + 'px';
+
+    // controller position
+    let controlPanel = document.getElementById('controller');
+    controlPanel.style.width = boardWidth + 'px';
+    controlPanel.style.height = controllerHeight + 'px';
 
     // rebuild
     object.buildEngine();
