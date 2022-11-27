@@ -72,8 +72,65 @@ class MatterObject {
         let r = ballRadius(w);
         els.push(Bodies.circle(50, 50, r, { restitution: 1 }));
 
+        // base
+        let baseSide = w / 4;
+        let baseY = h - 2 * baseSide; // base starting y coordinate
+        let vertices = [
+            { x: frT, y: baseY },
+            { x: frT, y: baseY + baseSide },
+            { x: frT + baseSide, y: baseY + baseSide },
+        ];
+        let comL = this.regularCenterOfMass(vertices);
+        els.push(Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true }));
+        let vertices2 = [
+            { x: w - frT, y: baseY },
+            { x: w - frT, y: baseY + baseSide },
+            { x: w - frT - baseSide, y: baseY + baseSide },
+        ];
+        let comR = this.regularCenterOfMass(vertices2);
+        els.push(Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true }));
+
+        // bars
+        let barSide = w / 4;
+        let barT = frT; // bar thickness
+        let barLX = baseSide + barSide / 2 - r;
+        let barY = baseY + baseSide + barT / 2 + barT;
+        let barL = Bodies.rectangle(barLX, barY, barSide, barT, { chamfer: 4 });
+        let barRX = w - baseSide - barSide / 2 + r;
+        let barR = Bodies.rectangle(barRX, barY, barSide, barT, { chamfer: 4 });
+        let pivotOffset = barSide / 4;
+        let barLConstraint = Constraint.create({
+            pointA: { x: barLX - pivotOffset, y: barY },
+            pointB: { x: -pivotOffset, y: 0 },
+            bodyB: barL,
+            length: 0
+        });
+        let barRConstraint = Constraint.create({
+            pointA: { x: barRX + pivotOffset, y: barY },
+            pointB: { x: pivotOffset, y: 0 },
+            bodyB: barR,
+            length: 0
+        });
+        els.push(barL, barLConstraint, barR, barRConstraint);
         Composite.add(this.engine.world, els);
     }
+
+    // calculate center of mass of regular shape
+    // vertices: array of {x, y}
+    // return {x, y} coordinate
+    regularCenterOfMass(vertices) {
+        let x = 0;
+        let y = 0;
+        for (const verts of vertices) {
+            x += verts.x || 0;
+            y += verts.y || 0;
+        }
+        return {
+            x: x / vertices.length,
+            y: y / vertices.length,
+        };
+    }
+
 }
 
 export default MatterObject;
