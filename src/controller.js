@@ -1,0 +1,42 @@
+/* handle controllers' key and click events */
+let Body = Matter.Body;
+
+const FORCE = 0.055;
+const LEFT_KEYS = new Set([65, 37, 100, 90, 74]); // a, '<-', 4, z, j
+const RIGHT_KEYS = new Set([68, 39, 102, 191, 76]); // d, '->', 6, /, l
+
+function applyLeftForce(bar) {
+    Body.applyForce(bar, { x: bar.position.x, y: bar.position.y }, { x: FORCE, y: -FORCE });
+}
+
+function applyRightForce(bar) {
+    Body.applyForce(bar, { x: bar.position.x, y: bar.position.y }, { x: -FORCE, y: -FORCE });
+}
+
+function handleKeyDown(evt, barL, barR) {
+    if (LEFT_KEYS.has(evt.keyCode)) {
+        applyLeftForce(barL);
+    }
+
+    if (RIGHT_KEYS.has(evt.keyCode)) {
+        applyRightForce(barR);
+    }
+}
+
+function handleKeyUp(evt, barL, barR) {
+}
+
+function handleClick(isLeft, isRight, barL, barR) {
+    if (isLeft) {
+        applyLeftForce(barL);
+    }
+    if (isRight) {
+        applyRightForce(barR);
+    }
+}
+
+export {
+    handleKeyDown,
+    handleKeyUp,
+    handleClick,
+}
