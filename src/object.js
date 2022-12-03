@@ -94,7 +94,7 @@ class MatterObject {
         let barSide = w / 4;
         let barT = frT; // bar thickness
         let barLX = baseSide + barSide / 2 - r;
-        let barY = baseY + baseSide + barT / 2 + barT;
+        let barY = baseY + baseSide + barT;
         let barL = Bodies.rectangle(barLX, barY, barSide, barT, { chamfer: 4 });
         let barRX = w - baseSide - barSide / 2 + r;
         let barR = Bodies.rectangle(barRX, barY, barSide, barT, { chamfer: 4 });
@@ -111,7 +111,18 @@ class MatterObject {
             bodyB: barR,
             length: 0
         });
-        els.push(barL, barLConstraint, barR, barRConstraint);
+        // set controllers
+        this.barL = barL;
+        this.barR = barR;
+        // bar stands
+        let standRadius = r;
+        let standDist = pivotOffset;
+        let standLX = barLX;
+        let standY = barY + standDist;
+        let standRX = barRX;
+        let standL = Bodies.circle(standLX, standY, standRadius, { isStatic: true });
+        let standR = Bodies.circle(standRX, standY, standRadius, { isStatic: true });
+        els.push(barL, barLConstraint, standL, barR, barRConstraint, standR);
         Composite.add(this.engine.world, els);
     }
 
@@ -131,6 +142,13 @@ class MatterObject {
         };
     }
 
+    // return object's barL and barR
+    getControlBars() {
+        return {
+            left: this.barL,
+            right: this.barR
+        }
+    }
 }
 
 export default MatterObject;
