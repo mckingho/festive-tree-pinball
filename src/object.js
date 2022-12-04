@@ -23,7 +23,8 @@ class MatterObject {
                 options: {
                     width,
                     height,
-                    wireframeBackground: 'transparent',
+                    wireframes: false,
+                    background: 'transparent',
                 }
             });
 
@@ -70,7 +71,14 @@ class MatterObject {
 
         // ball
         let r = ballRadius(w);
-        els.push(Bodies.circle(50, 50, r, { restitution: 1 }));
+        els.push(Bodies.circle(50, 50, r, {
+            restitution: 1,
+            render: {
+                fillStyle: '#ECECEC',
+                strokeStyle: '#D7D7D7',
+                lineWidth: 1,
+            }
+        }));
 
         // base
         let baseSide = w / 4;
@@ -95,9 +103,23 @@ class MatterObject {
         let barT = frT; // bar thickness
         let barLX = baseSide + barSide / 2 - r;
         let barY = baseY + baseSide + barT;
-        let barL = Bodies.rectangle(barLX, barY, barSide, barT, { chamfer: 4 });
+        let barL = Bodies.rectangle(barLX, barY, barSide, barT, {
+            chamfer: 4,
+            render: {
+                fillStyle: '#03AC13',
+                strokeStyle: '#028A0F',
+                lineWidth: 1,
+            }
+        });
         let barRX = w - baseSide - barSide / 2 + r;
-        let barR = Bodies.rectangle(barRX, barY, barSide, barT, { chamfer: 4 });
+        let barR = Bodies.rectangle(barRX, barY, barSide, barT, {
+            chamfer: 4,
+            render: {
+                fillStyle: '#D21404',
+                strokeStyle: '#990F02',
+                lineWidth: 1,
+            }
+        });
         let pivotOffset = barSide / 4;
         let barLConstraint = Constraint.create({
             pointA: { x: barLX - pivotOffset, y: barY },
