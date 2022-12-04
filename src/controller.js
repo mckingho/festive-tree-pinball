@@ -1,7 +1,7 @@
 /* handle controllers' key and click events */
 let Body = Matter.Body;
 
-const FORCE = 0.055;
+const FORCE = 0.1; // TODO may scale with board size
 const LEFT_KEYS = new Set([65, 37, 100, 90, 74]); // a, '<-', 4, z, j
 const RIGHT_KEYS = new Set([68, 39, 102, 191, 76]); // d, '->', 6, /, l
 
