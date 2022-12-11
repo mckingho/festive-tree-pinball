@@ -50,7 +50,7 @@ function resizeBoard() {
 
     // rebuild
     object.buildEngine();
-    objectBg.draw();
+    objectBg.draw(boardWidth, boardHeight);
 
     // reset event of controller object
     let { left: barL, right: barR } = object.getControlBars();

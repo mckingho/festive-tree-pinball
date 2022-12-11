@@ -46,10 +46,27 @@ function ballRadius(width) {
     return Math.max(MIN_BALL_RADIUS, Math.floor(width / 100));
 }
 
+// returns geometry object of pot image that is rendered in board
+// parms: board width, height
+// returns: {dx, dy, height, width}
+function potGeometry(width, height) {
+    let potWidth = Math.floor(width / 5);
+    let potHeight = potWidth;
+    let dx = width / 2 - potWidth / 2;
+    let dy = height / 3 * 2 - potHeight / 2;
+    return {
+        dx,
+        dy,
+        width: potWidth,
+        height: potHeight,
+    };
+}
+
 export {
+    MATTER_MARGIN,
     maxBoardDimension,
     boardControllerHeight,
     frameThickness,
     ballRadius,
-    MATTER_MARGIN,
+    potGeometry,
 };
