@@ -32,6 +32,7 @@ function resizeBoard() {
     if (!objectBg) {
         objectBg = new ObjectBackground();
     }
+    objectBg.resizeRender(boardWidth, boardHeight);
 
     // adjust board position
     let boardContainer = document.getElementById('board-container');

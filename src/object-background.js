@@ -15,13 +15,15 @@ class ObjectBackground {
         return instance;
     }
 
-    draw(width, height) {
-        let w = width;
-        let h = height;
-
+    resizeRender(width, height) {
         // Need to set canvas dimension before draw because it may be resized
         this.canvas.width = width;
         this.canvas.height = height;
+    }
+
+    draw(width, height) {
+        let w = width;
+        let h = height;
 
         this.ctx.fillStyle = 'grey';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
