@@ -62,6 +62,15 @@ function potGeometry(width, height) {
     };
 }
 
+// returns seed width, height
+function seedDimension(width, height) {
+    let seedWidth = Math.floor(width / 15);
+    return {
+        width: seedWidth,
+        height: seedWidth,
+    };
+}
+
 export {
     MATTER_MARGIN,
     maxBoardDimension,
@@ -69,4 +78,5 @@ export {
     frameThickness,
     ballRadius,
     potGeometry,
+    seedDimension,
 };
