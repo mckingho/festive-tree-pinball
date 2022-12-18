@@ -69,6 +69,23 @@ class MatterObject {
         els.push(Bodies.rectangle(w - frT / 2, h / 2, frT, h - frT * 2, { isStatic: true }));
         els.push(Bodies.rectangle(w / 2, h - frT / 2, w - frT * 2, frT, { isStatic: true }));
 
+        // left of hat
+        // Part C
+        // Part B
+        // Part A
+        let hatPartH = h / 12;
+        let hatPartALength = hatPartH / 0.92; // cos 22.5deg
+        let hatPartA = Bodies.rectangle(frT / 2, hatPartH * 3 - hatPartALength / 2, frT, hatPartALength, { isStatic: true });
+        Body.rotate(hatPartA, Math.PI / 8, { x: hatPartA.position.x + frT / 2, y: hatPartA.position.y + hatPartALength / 2 });
+        // find connecting point of part B from part A
+        let hatPartBX = frT + hatPartALength * 0.38; // sin 22.5deg
+        let hatPartBY = hatPartH * 3 - hatPartALength * 0.92; // cos 22.5deg
+        let hatPartBLength = hatPartH / 0.71; // cos 45deg
+        let hatPartB = Bodies.rectangle(hatPartBX - frT / 2, hatPartBY - hatPartBLength / 2, frT, hatPartBLength, { isStatic: true });
+        Body.rotate(hatPartB, Math.PI / 4, { x: hatPartB.position.x + frT / 2, y: hatPartB.position.y + hatPartBLength / 2 });
+        els.push(hatPartA, hatPartB);
+
+
         // ball
         let r = ballRadius(w);
         els.push(Bodies.circle(50, 50, r, {
