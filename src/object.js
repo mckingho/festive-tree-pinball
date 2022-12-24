@@ -64,8 +64,10 @@ class MatterObject {
         // frame
         let frT = frameThickness(w);
         // left, right, bottom of frame 
-        els.push(Bodies.rectangle(frT / 2, h / 2, frT, h - frT * 2, { isStatic: true }));
-        els.push(Bodies.rectangle(w - frT / 2, h / 2, frT, h - frT * 2, { isStatic: true }));
+        let frameOffsetH = h / 4;
+        let frameLength = h - frameOffsetH;
+        els.push(Bodies.rectangle(frT / 2, frameOffsetH + frameLength / 2, frT, frameLength, { isStatic: true }));
+        els.push(Bodies.rectangle(w - frT / 2, frameOffsetH + frameLength / 2, frT, frameLength, { isStatic: true }));
         els.push(Bodies.rectangle(w / 2, h - frT / 2, w - frT * 2, frT, { isStatic: true }));
 
         // left of hat
