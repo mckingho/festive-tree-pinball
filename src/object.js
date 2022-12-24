@@ -150,26 +150,28 @@ class MatterObject {
         els.push(Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true }));
 
         // bars
+        let barRenderL = {
+            fillStyle: '#03AC13',
+            strokeStyle: '#028A0F',
+            lineWidth: 1,
+        };
+        let barRenderR = {
+            fillStyle: '#D21404',
+            strokeStyle: '#990F02',
+            lineWidth: 1,
+        };
         let barSide = w / 4;
         let barT = frT; // bar thickness
         let barLX = baseSide + barSide / 2 - r;
         let barY = baseY + baseSide + barT;
         let barL = Bodies.rectangle(barLX, barY, barSide, barT, {
             chamfer: 4,
-            render: {
-                fillStyle: '#03AC13',
-                strokeStyle: '#028A0F',
-                lineWidth: 1,
-            }
+            render: barRenderL,
         });
         let barRX = w - baseSide - barSide / 2 + r;
         let barR = Bodies.rectangle(barRX, barY, barSide, barT, {
             chamfer: 4,
-            render: {
-                fillStyle: '#D21404',
-                strokeStyle: '#990F02',
-                lineWidth: 1,
-            }
+            render: barRenderR,
         });
         let pivotOffset = barSide / 4;
         let barLConstraint = Constraint.create({
@@ -193,8 +195,14 @@ class MatterObject {
         let standLX = barLX;
         let standY = barY + standDist;
         let standRX = barRX;
-        let standL = Bodies.circle(standLX, standY, standRadius, { isStatic: true });
-        let standR = Bodies.circle(standRX, standY, standRadius, { isStatic: true });
+        let standL = Bodies.circle(standLX, standY, standRadius, {
+            isStatic: true,
+            render: barRenderL,
+        });
+        let standR = Bodies.circle(standRX, standY, standRadius, {
+            isStatic: true,
+            render: barRenderR,
+        });
         els.push(barL, barLConstraint, standL, barR, barRConstraint, standR);
         Composite.add(this.engine.world, els);
     }
