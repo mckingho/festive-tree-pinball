@@ -63,16 +63,16 @@ class MatterObject {
 
         // frame
         let frT = frameThickness(w);
-        // left, top, right, bottom of frame 
+        // left, right, bottom of frame 
         els.push(Bodies.rectangle(frT / 2, h / 2, frT, h - frT * 2, { isStatic: true }));
-        els.push(Bodies.rectangle(w / 2, frT / 2, w - frT * 2, frT, { isStatic: true }));
         els.push(Bodies.rectangle(w - frT / 2, h / 2, frT, h - frT * 2, { isStatic: true }));
         els.push(Bodies.rectangle(w / 2, h - frT / 2, w - frT * 2, frT, { isStatic: true }));
 
         // left of hat
-        // Part C
-        // Part B
-        // Part A
+        // Position:
+        // - Part C
+        // - Part B
+        // - Part A
         let hatPartH = h / 12;
         let hatPartALength = hatPartH / 0.92; // cos 22.5deg
         let hatPartA = Bodies.rectangle(frT / 2, hatPartH * 3 - hatPartALength / 2, frT, hatPartALength, { isStatic: true });
@@ -83,8 +83,34 @@ class MatterObject {
         let hatPartBLength = hatPartH / 0.71; // cos 45deg
         let hatPartB = Bodies.rectangle(hatPartBX - frT / 2, hatPartBY - hatPartBLength / 2, frT, hatPartBLength, { isStatic: true });
         Body.rotate(hatPartB, Math.PI / 4, { x: hatPartB.position.x + frT / 2, y: hatPartB.position.y + hatPartBLength / 2 });
-        els.push(hatPartA, hatPartB);
+        // find connecting point of part C from part B
+        let hatPartCX = hatPartBX + hatPartBLength * 0.71; // sin 45deg
+        let hatPartCY = hatPartBY - hatPartBLength * 0.71; // cos 45deg
+        let hatPartCLength = Math.sqrt(Math.pow(hatPartCX - w, 2) + Math.pow(hatPartCY, 2));
+        let hatPartCRadian = Math.atan((w - hatPartCX) / hatPartCY);
+        let hatPartC = Bodies.rectangle(hatPartCX - frT / 2, hatPartCY - hatPartCLength / 2, frT, hatPartCLength, { isStatic: true });
+        Body.rotate(hatPartC, hatPartCRadian, { x: hatPartC.position.x + frT / 2, y: hatPartC.position.y + hatPartCLength / 2 });
+        // right of hat
+        // Position:
+        // - Part F
+        // - Part E
+        // - Part D
+        let hatPartDLength = hatPartALength;
+        let hatPartD = Bodies.rectangle(w - frT / 2, hatPartH * 3 - hatPartDLength / 2, frT, hatPartDLength, { isStatic: true });
+        Body.rotate(hatPartD, -Math.PI / 8, { x: hatPartD.position.x - frT / 2, y: hatPartD.position.y + hatPartALength / 2 });
+        // find connecting point of part E from part D
+        let hatPartEX = w - frT - hatPartDLength * 0.38; // sin 22.5deg
+        let hatPartEY = hatPartH * 3 - hatPartDLength * 0.92; // cos 22.5deg
+        let hatPartE = Bodies.rectangle(hatPartEX + frT / 2, hatPartEY - hatPartH / 2, frT, hatPartH, { isStatic: true });
+        // find connecting point of part F from part E
+        let hatPartFX = hatPartEX;
+        let hatPartFY = hatPartEY - hatPartH;
+        let hatPartFLength = Math.sqrt(Math.pow(hatPartFX - w, 2) + Math.pow(hatPartFY, 2));
+        let hatPartFRadian = Math.atan((w - hatPartFX) / hatPartFY);
+        let hatPartF = Bodies.rectangle(hatPartFX + frT / 2, hatPartFY - hatPartFLength / 2, frT, hatPartFLength, { isStatic: true });
+        Body.rotate(hatPartF, hatPartFRadian, { x: hatPartF.position.x - frT / 2, y: hatPartF.position.y + hatPartFLength / 2 });
 
+        els.push(hatPartA, hatPartB, hatPartC, hatPartD, hatPartE, hatPartF);
 
         // ball
         let r = ballRadius(w);
