@@ -2,6 +2,7 @@ import { maxBoardDimension, boardControllerHeight, MATTER_MARGIN } from './dimen
 import MatterObject from './object.js';
 import ObjectBackground from './object-background.js';
 import { handleKeyDown, handleKeyUp, handleClick } from './controller.js';
+import Foreground from './foreground.js';
 
 // max full board size
 let boardWidth = 0;
@@ -10,6 +11,7 @@ let controllerHeight = 0;
 
 let object;
 let objectBg; // object's background
+let fg; // foreground
 
 // Store the event function of controllers
 let barKeyDownFn;
@@ -33,16 +35,19 @@ function resizeBoard() {
         objectBg = new ObjectBackground();
     }
     objectBg.resizeRender(boardWidth, boardHeight);
+    if (!fg) {
+        fg = new Foreground();
+    }
+    fg.resizeRender(boardWidth, boardHeight);
 
     // adjust board position
     let boardContainer = document.getElementById('board-container');
     boardContainer.style.width = boardWidth + 'px';
-    let boardBackground = document.getElementById('board-background');
-    boardBackground.style.width = boardWidth + 'px';
-    boardBackground.style.height = boardHeight + 'px';
     let board = document.getElementById('board');
     let marginTopOffset = boardHeight + MATTER_MARGIN / 2;
     board.style.marginTop = '-' + marginTopOffset + 'px';
+    let fgDiv = document.getElementById('board-foreground');
+    fgDiv.style.marginTop = '-' + marginTopOffset + 'px';
 
     // controller position
     let controlPanel = document.getElementById('controller');

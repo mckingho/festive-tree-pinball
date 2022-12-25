@@ -15,8 +15,9 @@
 
 <body>
     <div id="board-container" style="margin: auto;">
-        <canvas id="board-background" style="z-index: -1;"></canvas>
+        <canvas id="board-background" style="z-index: -1; position: relative;"></canvas>
         <div id="board"></div>
+        <canvas id="board-foreground" style="z-index: 1; position: absolute;"></canvas>
     </div>
     <div id="controller" style="margin: auto;">
         <div id="btn-left" style="width: 50%; height: 100%; float:left; text-align: center;">L</div>
