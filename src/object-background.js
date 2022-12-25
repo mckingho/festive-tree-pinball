@@ -53,6 +53,7 @@ class ObjectBackground {
 
         // starting animation
         if (this.seedYOffset > 0) {
+            this.seedYOffset = this.seedYOffset - 1;
             window.requestAnimationFrame(() => { this.draw(w, h); });
         }
     }
@@ -67,7 +68,6 @@ class ObjectBackground {
         let w = this.canvas.width;
         let { width, height } = seedDimension(this.canvas.width, this.canvas.height);
         let dx = w / 2 - width / 2;
-        this.seedYOffset = this.seedYOffset - 1;
         let dy = this.potY - height - this.seedYOffset;
         this.ctx.drawImage(this.seedImg, dx, dy, width, height);
     }
