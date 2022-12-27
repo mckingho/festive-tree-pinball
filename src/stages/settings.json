@@ -1,0 +1,11 @@
+{
+    "index": [
+        "seed"
+    ],
+    "config": {
+        "seed": {
+            "faucet": true,
+            "faucetScore": 10
+        }
+    }
+}
