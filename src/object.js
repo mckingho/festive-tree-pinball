@@ -1,4 +1,4 @@
-import { frameThickness, ballRadius } from './dimension.js';
+import { frameThickness, ballRadius, regularCenterOfMass } from './dimension.js';
 
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
@@ -139,14 +139,14 @@ class MatterObject {
             { x: frT, y: baseY + baseSide },
             { x: frT + baseSide, y: baseY + baseSide },
         ];
-        let comL = this.regularCenterOfMass(vertices);
+        let comL = regularCenterOfMass(vertices);
         els.push(Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true }));
         let vertices2 = [
             { x: w - frT, y: baseY },
             { x: w - frT, y: baseY + baseSide },
             { x: w - frT - baseSide, y: baseY + baseSide },
         ];
-        let comR = this.regularCenterOfMass(vertices2);
+        let comR = regularCenterOfMass(vertices2);
         els.push(Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true }));
 
         // bars
@@ -205,22 +205,6 @@ class MatterObject {
         });
         els.push(barL, barLConstraint, standL, barR, barRConstraint, standR);
         Composite.add(this.engine.world, els);
-    }
-
-    // calculate center of mass of regular shape
-    // vertices: array of {x, y}
-    // return {x, y} coordinate
-    regularCenterOfMass(vertices) {
-        let x = 0;
-        let y = 0;
-        for (const verts of vertices) {
-            x += verts.x || 0;
-            y += verts.y || 0;
-        }
-        return {
-            x: x / vertices.length,
-            y: y / vertices.length,
-        };
     }
 
     // return object's barL and barR

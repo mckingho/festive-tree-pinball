@@ -71,6 +71,22 @@ function seedDimension(width, height) {
     };
 }
 
+// calculate center of mass of regular shape
+// vertices: array of {x, y}
+// return {x, y} coordinate
+function regularCenterOfMass(vertices) {
+    let x = 0;
+    let y = 0;
+    for (const verts of vertices) {
+        x += verts.x || 0;
+        y += verts.y || 0;
+    }
+    return {
+        x: x / vertices.length,
+        y: y / vertices.length,
+    };
+}
+
 export {
     MATTER_MARGIN,
     maxBoardDimension,
@@ -79,4 +95,5 @@ export {
     ballRadius,
     potGeometry,
     seedDimension,
+    regularCenterOfMass,
 };
