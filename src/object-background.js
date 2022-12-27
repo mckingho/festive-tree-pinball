@@ -1,4 +1,5 @@
-import { potGeometry, seedDimension } from './dimension.js';
+import { potGeometry, seedDimension, faucetGeometry } from './dimension.js';
+import { getConfig } from './stages/settings.js'
 
 let instance;
 
@@ -17,6 +18,9 @@ class ObjectBackground {
 
             this.seedImg = new Image();
             this.seedImg.src = 'resources/images/pinecone.png';
+
+            this.faucetImg = new Image();
+            this.faucetImg.src = 'resources/images/faucet.png';
         }
 
         return instance;
@@ -28,12 +32,15 @@ class ObjectBackground {
         this.canvas.height = height;
     }
 
-    draw(width, height) {
+    draw(width, height, stage = 0) {
         let w = width;
         let h = height;
 
         this.ctx.fillStyle = 'grey';
         this.ctx.fillRect(0, 0, w, h);
+
+        // get stage render config
+        const stageConfig = getConfig(stage);
 
         if (!this.isInitDrawn) {
             this.potImg.onload = () => {
@@ -48,6 +55,17 @@ class ObjectBackground {
             }
         }
         this.drawSeed()
+
+        if (!this.isInitDrawn) {
+            this.faucetImg.onload = () => {
+                if (stageConfig.faucet) {
+                    this.drawFaucet();
+                }
+            }
+        }
+        if (stageConfig.faucet) {
+            this.drawFaucet()
+        }
 
         this.isInitDrawn = true;
 
@@ -70,6 +88,11 @@ class ObjectBackground {
         let dx = w / 2 - width / 2;
         let dy = this.potY - height - this.seedYOffset;
         this.ctx.drawImage(this.seedImg, dx, dy, width, height);
+    }
+
+    drawFaucet() {
+        let { dx, dy, width, height } = faucetGeometry(this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.faucetImg, dx, dy, width, height);
     }
 }
 

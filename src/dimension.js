@@ -71,6 +71,22 @@ function seedDimension(width, height) {
     };
 }
 
+// returns geometry object of faucet image that is rendered in board
+// params: board width, height
+// returns: {dx, dy, height, width}
+function faucetGeometry(width, height) {
+    const faucetHeight = Math.floor(height / 12);
+    const faucetWidth = faucetHeight;
+    let dx = width / 2 - faucetWidth / 2;
+    let dy = height / 12 * 1.5 - faucetHeight / 2; // at top part
+    return {
+        dx,
+        dy,
+        width: faucetWidth,
+        height: faucetHeight,
+    };
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -95,5 +111,6 @@ export {
     ballRadius,
     potGeometry,
     seedDimension,
+    faucetGeometry,
     regularCenterOfMass,
 };
