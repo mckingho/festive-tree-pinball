@@ -1,4 +1,5 @@
 import { frameThickness, ballRadius, regularCenterOfMass } from './dimension.js';
+import StageObjects from './stages/objects.js';
 
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
@@ -36,6 +37,9 @@ class MatterObject {
 
             // run the engine
             Runner.run(this.runner, this.engine);
+
+            // include stages objects
+            this.stageObjects = new StageObjects();
 
             instance = this;
         }
@@ -204,6 +208,11 @@ class MatterObject {
             render: barRenderR,
         });
         els.push(barL, barLConstraint, standL, barR, barRConstraint, standR);
+
+        // add stages objects
+        const stageObjs = this.stageObjects.reloadObjects(w, h);
+        els.push(...stageObjs);
+
         Composite.add(this.engine.world, els);
     }
 

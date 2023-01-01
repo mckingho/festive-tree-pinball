@@ -3,6 +3,7 @@ const MATTER_MARGIN = 8;
 const CONTROL_PANEL_RATIO = 1 / 16;
 const MIN_FRAME_THICKNESS = 16;
 const MIN_BALL_RADIUS = 5;
+const MIN_LEVER_WIDTH = 5;
 
 function maxBoardDimension(maxWidth, maxHeight) {
     let boardWidth = 0;
@@ -87,6 +88,17 @@ function faucetGeometry(width, height) {
     };
 }
 
+// returns faucet's lever bar's width, length,
+// params: board width, faucet height
+function leverDimension(width, faucetHeight) {
+    let barWidth = Math.max(MIN_LEVER_WIDTH, Math.floor(width / 100));
+    let barLength = faucetHeight;
+    return {
+        width: barWidth,
+        length: barLength,
+    }
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -112,5 +124,6 @@ export {
     potGeometry,
     seedDimension,
     faucetGeometry,
+    leverDimension,
     regularCenterOfMass,
 };
