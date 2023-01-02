@@ -1,4 +1,4 @@
-import { frameThickness, ballRadius, regularCenterOfMass } from './dimension.js';
+import { frameThickness, ballRadius, barStandRadius, regularCenterOfMass } from './dimension.js';
 import StageObjects from './stages/objects.js';
 
 let Bodies = Matter.Bodies;
@@ -194,7 +194,7 @@ class MatterObject {
         this.barL = barL;
         this.barR = barR;
         // bar stands
-        let standRadius = r;
+        const standRadius = barStandRadius(w);
         let standDist = pivotOffset;
         let standLX = barLX;
         let standY = barY + standDist;

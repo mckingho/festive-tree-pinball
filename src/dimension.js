@@ -3,6 +3,7 @@ const MATTER_MARGIN = 8;
 const CONTROL_PANEL_RATIO = 1 / 16;
 const MIN_FRAME_THICKNESS = 16;
 const MIN_BALL_RADIUS = 5;
+const MIN_BAR_STAND_RADIUS = 5;
 const MIN_LEVER_WIDTH = 5;
 
 function maxBoardDimension(maxWidth, maxHeight) {
@@ -45,6 +46,11 @@ function frameThickness(width) {
 // calculate the ball radius, scaling same with frame thickness
 function ballRadius(width) {
     return Math.max(MIN_BALL_RADIUS, Math.floor(width / 100));
+}
+
+// calculate the bar stand radius, scaling same with frame thickness
+function barStandRadius(width) {
+    return Math.max(MIN_BAR_STAND_RADIUS, Math.floor(width / 100));
 }
 
 // returns geometry object of pot image that is rendered in board
@@ -121,6 +127,7 @@ export {
     boardControllerHeight,
     frameThickness,
     ballRadius,
+    barStandRadius,
     potGeometry,
     seedDimension,
     faucetGeometry,
