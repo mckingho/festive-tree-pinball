@@ -79,7 +79,7 @@ function faucetGeometry(width, height) {
     const faucetHeight = Math.floor(height / 12);
     const faucetWidth = faucetHeight;
     let dx = width / 2 - faucetWidth / 2;
-    let dy = height / 12 * 1.5 - faucetHeight / 2; // at top part
+    let dy = height / 12 * 2 - faucetHeight / 2; // at top part
     return {
         dx,
         dy,
