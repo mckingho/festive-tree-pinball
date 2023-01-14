@@ -3,6 +3,9 @@
         "seed"
     ],
     "config": {
+        "general": {
+            "barScore": 1
+        },
         "seed": {
             "faucet": true,
             "faucetScore": 10

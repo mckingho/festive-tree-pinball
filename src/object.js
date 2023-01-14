@@ -1,11 +1,14 @@
 import { frameThickness, ballRadius, barStandRadius, regularCenterOfMass } from './dimension.js';
 import StageObjects from './stages/objects.js';
+import { addScore } from './event-handler.js';
+import { getConfig } from './stages/settings.js'
 
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
 let Composite = Matter.Composite;
 let Constraint = Matter.Constraint;
 let Engine = Matter.Engine;
+const Events = Matter.Events;
 let Render = Matter.Render;
 let Runner = Matter.Runner;
 
@@ -40,6 +43,22 @@ class MatterObject {
 
             // include stages objects
             this.stageObjects = new StageObjects();
+
+            // body IDs
+            this.ballId = null;
+
+            // events handler
+            Events.on(this.engine, 'collisionStart', function (event) {
+                const pairs = event.pairs;
+                for (var i = 0; i < pairs.length; i++) {
+                    const pair = pairs[i];
+                    if (pair.bodyA.id == instance.ballId && pair.bodyB.onCollisionStartCustomCb) {
+                        pair.bodyB.onCollisionStartCustomCb();
+                    } else if (pair.bodyB.id == instance.ballID && pair.bodyA.onCollisionStartCustomCb) {
+                        pair.bodyA.onCollisionStartCustomCb();
+                    }
+                }
+            });
 
             instance = this;
         }
@@ -126,14 +145,16 @@ class MatterObject {
 
         // ball
         let r = ballRadius(w);
-        els.push(Bodies.circle(50, 50, r, {
+        const ball = Bodies.circle(150, 150, r, {
             restitution: 1,
             render: {
                 fillStyle: '#ECECEC',
                 strokeStyle: '#D7D7D7',
                 lineWidth: 1,
             }
-        }));
+        });
+        this.ballId = ball.id;
+        els.push(ball);
 
         // base
         let baseSide = w / 4;
@@ -193,6 +214,14 @@ class MatterObject {
         // set controllers
         this.barL = barL;
         this.barR = barR;
+        this.barL.onCollisionStartCustomCb = () => {
+            const stageConfig = getConfig(this.stage);
+            addScore(stageConfig.barScore);
+        };
+        this.barR.onCollisionStartCustomCb = () => {
+            const stageConfig = getConfig(this.stage);
+            addScore(stageConfig.barScore);
+        };
         // bar stands
         const standRadius = barStandRadius(w);
         let standDist = pivotOffset;
