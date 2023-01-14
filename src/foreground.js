@@ -26,6 +26,7 @@ class Foreground {
     }
 
     draw(width, height) {
+        this.ctx.clearRect(0, 0, width, height);
         this.drawScoreBg(width);
         this.drawScore(width)
     }

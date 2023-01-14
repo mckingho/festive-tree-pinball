@@ -79,3 +79,7 @@ function resizeBoard() {
 
 window.addEventListener('load', resizeBoard);
 window.addEventListener("resize", resizeBoard);
+
+// custom events listener
+window.addEventListener('custom-refresh-fg', () => { fg.draw(boardWidth, boardHeight) });
+window.addEventListener('custom-refresh-bg', () => { });
