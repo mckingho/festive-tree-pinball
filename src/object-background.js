@@ -21,6 +21,8 @@ class ObjectBackground {
 
             this.faucetImg = new Image();
             this.faucetImg.src = 'resources/images/faucet.png';
+
+            instance = this;
         }
 
         return instance;

@@ -12,6 +12,8 @@ class Foreground {
             this.ctx = this.canvas.getContext('2d');
 
             this.score = new Score();
+
+            instance = this;
         }
 
         return instance;

@@ -14,6 +14,8 @@ class StageObjects {
         if (!instance) {
             this.stage = 0;
             this.objects = [];
+
+            instance = this;
         }
         return instance;
     }
