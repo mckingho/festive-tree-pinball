@@ -2,7 +2,7 @@ const BOARD_RATIO = 9 / 16;
 const MATTER_MARGIN = 8;
 const CONTROL_PANEL_RATIO = 1 / 16;
 const MIN_FRAME_THICKNESS = 16;
-const MIN_BALL_RADIUS = 5;
+const MIN_BALL_RADIUS = 8;
 const MIN_BAR_STAND_RADIUS = 5;
 const MIN_LEVER_WIDTH = 5;
 
