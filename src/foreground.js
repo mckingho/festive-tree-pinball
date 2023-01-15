@@ -33,10 +33,11 @@ class Foreground {
         this.ctx.clearRect(0, 0, width, height);
         this.drawScoreBg(width);
         this.drawScore(width);
-        this.drawWatering(width, height);
+        this.drawWatering();
 
         if (this.wateringBits > 0) {
             window.requestAnimationFrame(() => { this.draw(width, height); });
+            this.updateWatering();
         }
     }
 
@@ -63,9 +64,11 @@ class Foreground {
         this.ctx.strokeText(val, padding, padding * 2.5);
     }
 
-    /// draw water fall from faucet to pot.
+    /// init animation of water falling from faucet to pot.
     /// lines diverge downwards in an isosceles trapezoid region
-    drawWatering(width, height) {
+    animateWatering(width, height) {
+        if (this.waters.length != 0 || this.wateringBits > 0) return;
+
         const { dx: faucetDx, dy: faucetDy, width: faucetWidth, height: faucetHeight } = faucetGeometry(width, height);
         const { dy: potDy, width: potWidth } = potGeometry(width, height);
         const upperDx = faucetDx + faucetWidth * 0.2; // FIXME: faucet's width is roughly 60% in img src
@@ -75,51 +78,65 @@ class Foreground {
         const lowerWidth = potWidth;
         const yStepMin = wateringHeight / 60; // assume 60 frames/s
 
+        const n = 16;
+        // init new waters if not watering 
+        for (let i = 0; i < n; i += 1) {
+            const xRand = Math.random();
+            const x = xRand * upperWidth + upperDx; // starting x coordinate at faucet
+            const xEnd = xRand * lowerWidth + upperDx - (lowerWidth - upperWidth) / 2; // x coordinate at pot
+            const y = dy; // starting y coordinate at faucet
+            const x2y = (xEnd - x) / (wateringHeight); // step ratio
+            const yStep = Math.random() * yStepMin + yStepMin; // water step on y coordinate
+            const xStep = yStep * x2y;
+            this.waters.push({
+                x,
+                y,
+                xStep,
+                yStep,
+                yMax: potDy,
+            })
+            this.wateringBits |= (1 << i);
+        }
+
+        this.draw(width, height);
+    }
+
+    /// draw watering with waters data
+    drawWatering() {
         this.ctx.strokeStyle = 'rgba(174, 194, 224,0.5)';
         this.ctx.lineWidth = 2;
         this.ctx.lineCap = 'round';
 
-        const n = 16;
-        // init new waters if not watering 
-        if (this.wateringBits == 0) {
-            this.waters = [];
-            for (let i = 0; i < n; i += 1) {
-                const xRand = Math.random();
-                const x = xRand * upperWidth + upperDx; // starting x coordinate at faucet
-                const xEnd = xRand * lowerWidth + upperDx - (lowerWidth - upperWidth) / 2; // x coordinate at pot
-                const y = dy; // starting y coordinate at faucet
-                const x2y = (xEnd - x) / (wateringHeight); // step ratio
-                const yStep = Math.random() * yStepMin + yStepMin; // water step on y coordinate
-                const xStep = yStep * x2y;
-                this.waters.push({
-                    x,
-                    y,
-                    xStep,
-                    yStep,
-                })
-                this.wateringBits |= (1 << i);
-            }
-        }
-
-        // draw and update waters
         for (let i = 0; i < this.waters.length; i += 1) {
             const w = this.waters[i];
             if ((this.wateringBits >> i) & 1) {
                 const x2 = w.x + w.xStep;
                 const y2 = w.y + w.yStep;
-                if (y2 < potDy) {
+                if (y2 < w.yMax) {
                     this.ctx.beginPath();
                     this.ctx.moveTo(w.x, w.y);
                     this.ctx.lineTo(x2, y2);
                     this.ctx.stroke();
-                } else {
-                    // set bits to not draw
-                    this.wateringBits &= ~(1 << i);
                 }
-                // update x, y for animation
-                this.waters[i].x = x2;
-                this.waters[i].y = y2;
             }
+        }
+    }
+
+    updateWatering() {
+        for (let i = 0; i < this.waters.length; i += 1) {
+            const w = this.waters[i];
+            const x2 = w.x + w.xStep;
+            const y2 = w.y + w.yStep;
+            if (y2 >= w.yMax) {
+                // set bits to not draw
+                this.wateringBits &= ~(1 << i);
+            }
+            this.waters[i].x = x2;
+            this.waters[i].y = y2;
+        }
+        // clear waters
+        if (this.wateringBits == 0) {
+            this.waters = [];
         }
     }
 }
