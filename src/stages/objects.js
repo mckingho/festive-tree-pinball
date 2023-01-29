@@ -1,5 +1,6 @@
 import { getConfig } from './settings.js'
 import { faucetGeometry, leverDimension } from '../dimension.js';
+import { turnFaucet } from '../event-handler.js';
 
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
@@ -64,6 +65,10 @@ class StageObjects {
         const lever = Body.create({
             parts: [bar1, bar2, bar1Circle1, bar1Circle2, bar2Circle1, bar2Circle2]
         });
+        lever.onCollisionStartCustomCb = () => {
+            const stageConfig = getConfig(instance.stage);
+            turnFaucet(stageConfig.faucetScore);
+        }
         const constraint = Constraint.create({
             pointA: { x, y },
             bodyB: lever,

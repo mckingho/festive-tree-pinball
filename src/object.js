@@ -50,12 +50,22 @@ class MatterObject {
             // events handler
             Events.on(this.engine, 'collisionStart', function (event) {
                 const pairs = event.pairs;
-                for (var i = 0; i < pairs.length; i++) {
+                for (let i = 0; i < pairs.length; i += 1) {
                     const pair = pairs[i];
-                    if (pair.bodyA.id == instance.ballId && pair.bodyB.onCollisionStartCustomCb) {
-                        pair.bodyB.onCollisionStartCustomCb();
-                    } else if (pair.bodyB.id == instance.ballID && pair.bodyA.onCollisionStartCustomCb) {
-                        pair.bodyA.onCollisionStartCustomCb();
+                    if (pair.bodyA.id == instance.ballId) {
+                        if (pair.bodyB.onCollisionStartCustomCb) {
+                            pair.bodyB.onCollisionStartCustomCb();
+                        }
+                        if (pair.bodyB.parent && pair.bodyB.parent.id != pair.bodyB.id && pair.bodyB.parent.onCollisionStartCustomCb) {
+                            pair.bodyB.parent.onCollisionStartCustomCb();
+                        }
+                    } else if (pair.bodyB.id == instance.ballID) {
+                        if (pair.bodyA.onCollisionStartCustomCb) {
+                            pair.bodyA.onCollisionStartCustomCb();
+                        }
+                        if (pair.bodyA.parent && pair.bodyA.parent.id != pair.bodyA.id && pair.bodyA.parent.onCollisionStartCustomCb) {
+                            pair.bodyA.parent.onCollisionStartCustomCb();
+                        }
                     }
                 }
             });
@@ -215,11 +225,11 @@ class MatterObject {
         this.barL = barL;
         this.barR = barR;
         this.barL.onCollisionStartCustomCb = () => {
-            const stageConfig = getConfig(this.stage);
+            const stageConfig = getConfig(instance.stage);
             addScore(stageConfig.barScore);
         };
         this.barR.onCollisionStartCustomCb = () => {
-            const stageConfig = getConfig(this.stage);
+            const stageConfig = getConfig(instance.stage);
             addScore(stageConfig.barScore);
         };
         // bar stands

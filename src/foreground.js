@@ -29,14 +29,17 @@ class Foreground {
         this.canvas.height = height;
     }
 
-    draw(width, height) {
+    draw() {
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+
         this.ctx.clearRect(0, 0, width, height);
         this.drawScoreBg(width);
         this.drawScore(width);
         this.drawWatering();
 
         if (this.wateringBits > 0) {
-            window.requestAnimationFrame(() => { this.draw(width, height); });
+            window.requestAnimationFrame(() => { this.draw(); });
             this.updateWatering();
         }
     }
@@ -66,7 +69,9 @@ class Foreground {
 
     /// init animation of water falling from faucet to pot.
     /// lines diverge downwards in an isosceles trapezoid region
-    animateWatering(width, height) {
+    animateWatering() {
+        const width = this.canvas.width;
+        const height = this.canvas.height;
         if (this.waters.length != 0 || this.wateringBits > 0) return;
 
         const { dx: faucetDx, dy: faucetDy, width: faucetWidth, height: faucetHeight } = faucetGeometry(width, height);
@@ -98,7 +103,7 @@ class Foreground {
             this.wateringBits |= (1 << i);
         }
 
-        this.draw(width, height);
+        this.draw();
     }
 
     /// draw watering with waters data
