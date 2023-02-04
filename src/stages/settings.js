@@ -5,6 +5,11 @@ function getConfig(stage) {
     return { ...settings.config['general'], ...settings.config[stageKey] };
 }
 
+function getIndices() {
+    return settings.index;
+}
+
 export {
     getConfig,
+    getIndices,
 }

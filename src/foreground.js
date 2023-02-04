@@ -67,6 +67,11 @@ class Foreground {
         this.ctx.strokeText(val, padding, padding * 2.5);
     }
 
+    /// init animation of level up text
+    animateLevelUp() {
+        // TODO
+    }
+
     /// init animation of water falling from faucet to pot.
     /// lines diverge downwards in an isosceles trapezoid region
     animateWatering() {

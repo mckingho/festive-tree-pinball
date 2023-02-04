@@ -3,6 +3,7 @@
 */
 import Score from './score.js';
 import Foreground from './foreground.js';
+import Achievement from './stages/achievement.js';
 
 function addScore(value) {
     const score = new Score();
@@ -18,7 +19,12 @@ function turnFaucet(value) {
     fg.animateWatering();
     const score = new Score();
     score.add(value);
+    const achievement = new Achievement();
+    achievement.hits.faucet += 1;
 
+    if (achievement.checkLevelUp()) {
+        fg.animateLevelUp();
+    }
     fg.draw();
 }
 
