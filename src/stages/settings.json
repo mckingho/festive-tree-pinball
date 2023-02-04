@@ -1,6 +1,7 @@
 {
     "index": [
-        "seed"
+        "seed",
+        "trunk"
     ],
     "config": {
         "general": {
@@ -10,6 +11,11 @@
             "faucet": true,
             "faucetScore": 10,
             "faucetHitRequirement": 2
+        },
+        "trunk": {
+            "faucet": true,
+            "fauetSore": 12,
+            "faucetHitRequirement": 5
         }
     }
 }
