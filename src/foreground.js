@@ -50,7 +50,11 @@ class Foreground {
         const bgWidth = padding * 3 + this.ctx.measureText(this.score.val()).width;
         this.ctx.beginPath();
         this.ctx.roundRect(-padding, padding, bgWidth, padding * 2, padding);
-        this.ctx.fillStyle = 'rgba(75, 75, 75, 0.5)';
+        const gradient = this.ctx.createLinearGradient(0, 0, bgWidth, 0);
+        gradient.addColorStop(0, '#00FF00');
+        gradient.addColorStop(0.5, '#FFFF00');
+        gradient.addColorStop(1, '#FF0000');
+        this.ctx.fillStyle = gradient;
         this.ctx.fill();
     }
 
@@ -59,11 +63,7 @@ class Foreground {
         this.ctx.font = padding + 'px Helvetica';
         const val = this.score.val();
         const textWidth = this.ctx.measureText(val).width;
-        const gradient = this.ctx.createLinearGradient(padding, 0, padding + textWidth, 0);
-        gradient.addColorStop(0, '#00FF00');
-        gradient.addColorStop(0.5, '#FFFF00');
-        gradient.addColorStop(1, '#FF0000');
-        this.ctx.strokeStyle = gradient;
+        this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
         this.ctx.strokeText(val, padding, padding * 2.5);
     }
 
