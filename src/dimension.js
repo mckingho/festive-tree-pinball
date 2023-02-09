@@ -105,6 +105,15 @@ function leverDimension(width, faucetHeight) {
     }
 }
 
+// returns trunk width, height
+function trunkDimension(potWidth) {
+    let trunkWidth = Math.floor(potWidth * 2 / 3);
+    return {
+        width: trunkWidth,
+        height: trunkWidth,
+    };
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -132,5 +141,6 @@ export {
     seedDimension,
     faucetGeometry,
     leverDimension,
+    trunkDimension,
     regularCenterOfMass,
 };

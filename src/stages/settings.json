@@ -8,11 +8,13 @@
             "barScore": 1
         },
         "seed": {
+            "seed": true,
             "faucet": true,
             "faucetScore": 10,
             "faucetHitRequirement": 2
         },
         "trunk": {
+            "trunk": true,
             "faucet": true,
             "fauetSore": 12,
             "faucetHitRequirement": 5

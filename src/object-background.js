@@ -1,4 +1,4 @@
-import { potGeometry, seedDimension, faucetGeometry } from './dimension.js';
+import { potGeometry, seedDimension, faucetGeometry, trunkDimension } from './dimension.js';
 import { getConfig } from './stages/settings.js'
 
 let instance;
@@ -22,6 +22,9 @@ class ObjectBackground {
             this.faucetImg = new Image();
             this.faucetImg.src = 'resources/images/faucet.png';
 
+            this.trunkImg = new Image();
+            this.trunkImg.src = 'resources/images/trunk.png';
+
             instance = this;
         }
 
@@ -34,9 +37,9 @@ class ObjectBackground {
         this.canvas.height = height;
     }
 
-    draw(width, height, stage = 0) {
-        let w = width;
-        let h = height;
+    draw(stage = 0) {
+        let w = this.canvas.width;
+        let h = this.canvas.height;
 
         this.ctx.fillStyle = 'grey';
         this.ctx.fillRect(0, 0, w, h);
@@ -56,7 +59,13 @@ class ObjectBackground {
                 this.drawSeed();
             }
         }
-        this.drawSeed()
+        if (stageConfig.seed) {
+            this.drawSeed()
+        }
+
+        if (stageConfig.trunk) {
+            this.drawTrunk()
+        }
 
         if (!this.isInitDrawn) {
             this.faucetImg.onload = () => {
@@ -74,7 +83,7 @@ class ObjectBackground {
         // starting animation
         if (this.seedYOffset > 0) {
             this.seedYOffset = this.seedYOffset - 1;
-            window.requestAnimationFrame(() => { this.draw(w, h); });
+            window.requestAnimationFrame(() => { this.draw(); });
         }
     }
 
@@ -82,6 +91,7 @@ class ObjectBackground {
         let { dx, dy, width, height } = potGeometry(this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.potImg, dx, dy, width, height);
         this.potY = dy;
+        this.potWidth = width;
     }
 
     drawSeed() {
@@ -95,6 +105,13 @@ class ObjectBackground {
     drawFaucet() {
         let { dx, dy, width, height } = faucetGeometry(this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.faucetImg, dx, dy, width, height);
+    }
+
+    drawTrunk() {
+        let { width, height } = trunkDimension(this.potWidth);
+        let dx = this.canvas.width / 2 - width / 2;
+        let dy = this.potY - height;
+        this.ctx.drawImage(this.trunkImg, dx, dy, width, height);
     }
 }
 

@@ -56,7 +56,7 @@ function resizeBoard() {
 
     // rebuild
     object.buildEngine();
-    objectBg.draw(boardWidth, boardHeight);
+    objectBg.draw();
     fg.draw();
 
     // reset event of controller object
