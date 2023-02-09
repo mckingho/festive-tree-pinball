@@ -34,8 +34,8 @@ class Foreground {
         const height = this.canvas.height;
 
         this.ctx.clearRect(0, 0, width, height);
-        this.drawScoreBg(width);
-        this.drawScore(width);
+        this.drawScoreBg();
+        this.drawScore();
         this.drawWatering();
 
         if (this.wateringBits > 0) {
@@ -44,7 +44,8 @@ class Foreground {
         }
     }
 
-    drawScoreBg(width) {
+    drawScoreBg() {
+        const width = this.canvas.width;
         const padding = frameThickness(width);
         this.ctx.font = padding + 'px Helvetica';
         const bgWidth = padding * 3 + this.ctx.measureText(this.score.val()).width;
@@ -58,11 +59,11 @@ class Foreground {
         this.ctx.fill();
     }
 
-    drawScore(width) {
+    drawScore() {
+        const width = this.canvas.width;
         const padding = frameThickness(width);
         this.ctx.font = padding + 'px Helvetica';
         const val = this.score.val();
-        const textWidth = this.ctx.measureText(val).width;
         this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
         this.ctx.strokeText(val, padding, padding * 2.5);
     }
