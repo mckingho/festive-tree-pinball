@@ -1,4 +1,4 @@
-import { potGeometry, seedDimension, faucetGeometry, trunkDimension } from './dimension.js';
+import { potGeometry, seedDimension, faucetGeometry, trunkDimension, leavesGeometry } from './dimension.js';
 import { getConfig } from './stages/settings.js'
 
 let instance;
@@ -24,6 +24,17 @@ class ObjectBackground {
 
             this.trunkImg = new Image();
             this.trunkImg.src = 'resources/images/trunk.png';
+
+            this.leavesImgs = [new Image(), new Image(), new Image(), new Image()];
+            this.trunkImg.onload = () => {
+                this.leavesImgs[0].src = 'resources/images/leaves/leaves1.png';
+                this.leavesImgs[1].src = 'resources/images/leaves/leaves2.png';
+                this.leavesImgs[2].src = 'resources/images/leaves/leaves3.png';
+                this.leavesImgs[3].src = 'resources/images/leaves/leaves4.png';
+            }
+
+            // init which and how leaves render
+            this.leavesLoadIndices = Array(4).fill().map(() => Math.floor(Math.random() * 8));
 
             instance = this;
         }
@@ -65,6 +76,12 @@ class ObjectBackground {
 
         if (stageConfig.trunk) {
             this.drawTrunk()
+        }
+
+        if (stageConfig.leavesMax && stageConfig.leavesMax > 0) {
+            for (let i = 0; i < stageConfig.leavesMax; i += 1) {
+                this.drawLeaves(i);
+            }
         }
 
         if (!this.isInitDrawn) {
@@ -112,6 +129,21 @@ class ObjectBackground {
         let dx = this.canvas.width / 2 - width / 2;
         let dy = this.potY - height;
         this.ctx.drawImage(this.trunkImg, dx, dy, width, height);
+    }
+
+    drawLeaves(leavesLevel) {
+        const { dx, dy, width, height } = leavesGeometry(this.canvas.width, this.canvas.height, leavesLevel);
+        const loadIdx = this.leavesLoadIndices[leavesLevel];
+        const imgIdx = Math.floor(loadIdx / 2);
+        if (loadIdx % 2) {
+            this.ctx.drawImage(this.leavesImgs[imgIdx], dx, dy, width, height);
+        } else {
+            // flip image
+            this.ctx.save();
+            this.ctx.scale(-1, 1);
+            this.ctx.drawImage(this.leavesImgs[imgIdx], -dx, dy, -width, height);
+            this.ctx.restore();
+        }
     }
 }
 

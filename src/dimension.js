@@ -57,10 +57,10 @@ function barStandRadius(width) {
 // parms: board width, height
 // returns: {dx, dy, height, width}
 function potGeometry(width, height) {
-    let potWidth = Math.floor(width / 5);
+    let potWidth = Math.floor(width / 6);
     let potHeight = potWidth;
     let dx = width / 2 - potWidth / 2;
-    let dy = height / 3 * 2 - potHeight / 2;
+    let dy = height / 4 * 3;
     return {
         dx,
         dy,
@@ -114,6 +114,26 @@ function trunkDimension(potWidth) {
     };
 }
 
+// returns geometry object of leaves image that is rendered in board
+// params: board width, height, leaves level from bottom
+// returns: {dx, dy, height, width}
+function leavesGeometry(width, height, i) {
+    const leavesHeight = height * (1 / 9 + 1 / 12);
+    const leavesWidth = leavesHeight;
+    const dx = width / 2 - leavesWidth / 2;
+    // growth = trunk + self height + previous levels' leaves
+    const { width: potWidth } = potGeometry(width, height);
+    const { height: trunkHeight } = trunkDimension(potWidth);
+    const growth = trunkHeight + leavesHeight * 3 / 4 + height / 9 * i;
+    const dy = height / 4 * 3 - growth;
+    return {
+        dx,
+        dy,
+        width: leavesWidth,
+        height: leavesHeight,
+    };
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -142,5 +162,6 @@ export {
     faucetGeometry,
     leverDimension,
     trunkDimension,
+    leavesGeometry,
     regularCenterOfMass,
 };
