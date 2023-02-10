@@ -17,6 +17,9 @@ class Foreground {
             this.wateringBits = 0; // watering if some bits set
             this.waters = [];
 
+            // for level up animation
+            this.levelUp = null;
+
             instance = this;
         }
 
@@ -36,11 +39,17 @@ class Foreground {
         this.ctx.clearRect(0, 0, width, height);
         this.drawScoreBg();
         this.drawScore();
+        this.drawLevelUp();
         this.drawWatering();
 
-        if (this.wateringBits > 0) {
+        if (this.wateringBits > 0 || this.levelUp) {
             window.requestAnimationFrame(() => { this.draw(); });
+        }
+        if (this.wateringBits > 0) {
             this.updateWatering();
+        }
+        if (this.levelUp) {
+            this.updateLevelUp();
         }
     }
 
@@ -70,7 +79,53 @@ class Foreground {
 
     /// init animation of level up text
     animateLevelUp() {
-        // TODO
+        const width = this.canvas.width;
+        const padding = frameThickness(width);
+        const val = 'Next stage 🎄';
+        const valWidth = this.ctx.measureText(val).width + padding; // add emoji length
+        this.levelUp = {
+            font: padding + 'px Helvetica',
+            val,
+            valWidth,
+            textX: -valWidth + 2,
+            textY: padding * 5,
+            bgX: -valWidth - padding - 5, // extra length to hide left round
+            bgY: padding * 4,
+            bgWidth: valWidth + 2 * (padding + 5), // extra length to hide left round
+            bgHeight: padding * 1.2,
+            stepX: 2,
+            maxX: padding,
+            cooldown: 10, // staying after animation
+        };
+    }
+
+    drawLevelUp() {
+        if (this.levelUp) {
+            this.ctx.beginPath();
+            this.ctx.roundRect(this.levelUp.bgX, this.levelUp.bgY, this.levelUp.bgWidth, this.levelUp.bgHeight, 5);
+            const gradient = this.ctx.createLinearGradient(this.levelUp.bgX, this.levelUp.bgY, this.levelUp.bgX + this.levelUp.bgWidth, this.levelUp.bgY);
+            gradient.addColorStop(0, 'rgba(0, 255, 0, 0.2)');
+            gradient.addColorStop(0.5, 'rgba(255, 255, 0, 0.2)');
+            gradient.addColorStop(1, 'rgba(255, 0, 0, 0.2)');
+            this.ctx.fillStyle = gradient;
+            this.ctx.fill();
+            this.ctx.fillStyle = 'black';
+            this.ctx.font = this.levelUp.font;
+            this.ctx.fillText(this.levelUp.val, this.levelUp.textX, this.levelUp.textY);
+        }
+    }
+
+    /// update level up object for animation
+    updateLevelUp() {
+        if (this.levelUp.textX >= this.levelUp.maxX) {
+            this.levelUp.cooldown -= 1;
+            if (this.levelUp.cooldown < 0) {
+                this.levelUp = null;
+            }
+        } else {
+            this.levelUp.textX += this.levelUp.stepX;
+            this.levelUp.bgX += this.levelUp.stepX;
+        }
     }
 
     /// init animation of water falling from faucet to pot.
