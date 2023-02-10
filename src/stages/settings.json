@@ -1,7 +1,11 @@
 {
     "index": [
         "seed",
-        "trunk"
+        "trunk",
+        "leaves1",
+        "leaves2",
+        "leaves3",
+        "leaves4"
     ],
     "config": {
         "general": {
@@ -18,6 +22,33 @@
             "faucet": true,
             "fauetSore": 12,
             "faucetHitRequirement": 5
+        },
+        "leaves1": {
+            "trunk": true,
+            "faucet": true,
+            "fauetSore": 15,
+            "faucetHitRequirement": 6,
+            "leavesMax": 1
+        },
+        "leaves2": {
+            "trunk": true,
+            "faucet": true,
+            "fauetSore": 20,
+            "faucetHitRequirement": 7,
+            "leavesMax": 2
+        },
+        "leaves3": {
+            "trunk": true,
+            "faucet": true,
+            "fauetSore": 30,
+            "faucetHitRequirement": 8,
+            "leavesMax": 3
+        },
+        "leaves4": {
+            "trunk": true,
+            "leavesMax": 4,
+            "star": true,
+            "starScore": 100
         }
     }
 }

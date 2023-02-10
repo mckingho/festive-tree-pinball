@@ -11,7 +11,13 @@ class Achievement {
             };
 
             this.level = 0;
-            this.maxLevel = getIndices().length - 1;
+            const indices = getIndices();
+            this.maxLevel = indices.length - 1;
+            for (let i = 0; i < indices.length; i += 1) {
+                if (indices[i] == 'leaves3') {
+                    this.faucetMaxLevel = i;
+                }
+            }
 
             instance = this;
         }
@@ -21,9 +27,8 @@ class Achievement {
     // check level with stage goals
     // return whether level up
     checkLevelUp() {
-        console.log(this.level);
         const c = getConfig(this.level);
-        if (this.level == 0) {
+        if (this.level <= this.faucetMaxLevel) { // faucet requirement to level up
             if (c.faucetHitRequirement <= this.hits.faucet) {
                 this.level += 1;
                 return true;
