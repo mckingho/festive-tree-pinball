@@ -83,19 +83,26 @@ class Foreground {
         const padding = frameThickness(width);
         const val = 'Next stage 🎄';
         const valWidth = this.ctx.measureText(val).width + padding; // add emoji length
+        const bgOffset = padding + 5; // extra length to hide rounded left side
+        const bgX = -valWidth - bgOffset;
+        const maxX = padding;
+        const stepX = 2;
+        const stepTs = 2000 / (maxX - bgX) * stepX;
         this.levelUp = {
             font: padding + 'px Helvetica',
             val,
             valWidth,
             textX: -valWidth + 2,
             textY: padding * 5,
-            bgX: -valWidth - padding - 5, // extra length to hide left round
+            bgX,
             bgY: padding * 4,
-            bgWidth: valWidth + 2 * (padding + 5), // extra length to hide left round
+            bgWidth: valWidth + bgOffset,
             bgHeight: padding * 1.2,
-            stepX: 2,
-            maxX: padding,
-            cooldown: 10, // staying after animation
+            stepX,
+            maxX,
+            cooldown: 5, // staying after animation
+            nextTs: Date.now() + stepTs, // next animation update by ts
+            stepTs,
         };
     }
 
@@ -117,6 +124,12 @@ class Foreground {
 
     /// update level up object for animation
     updateLevelUp() {
+        let now = Date.now();
+        if (this.levelUp.nextTs < now) {
+            this.levelUp.nextTs = now + this.levelUp.stepTs;
+        } else {
+            return;
+        }
         if (this.levelUp.textX >= this.levelUp.maxX) {
             this.levelUp.cooldown -= 1;
             if (this.levelUp.cooldown < 0) {
