@@ -14,7 +14,7 @@ class StageObjects {
     constructor() {
         if (!instance) {
             this.stage = 0;
-            this.objects = [];
+            this.objects = {};
 
             instance = this;
         }
@@ -22,14 +22,14 @@ class StageObjects {
     }
 
     reloadObjects(width, height, stage = 0) {
-        this.objects = [];
+        this.objects = {};
         this.stage = stage;
 
         // get stage render config
         const stageConfig = getConfig(stage);
 
         if (stageConfig.faucet) {
-            this.loadLever(width, height);
+            this.objects.leverObjects = this.loadLever(width, height);
         }
 
         return this.objects;
@@ -74,7 +74,7 @@ class StageObjects {
             bodyB: lever,
             pointB: { x: 0, y: 0 }
         });
-        this.objects.push(lever, constraint);
+        return [lever, constraint];
     }
 }
 

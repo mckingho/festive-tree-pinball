@@ -43,6 +43,7 @@ class MatterObject {
 
             // include stages objects
             this.stageObjects = new StageObjects();
+            this.stageObjectsData = {};
 
             // body IDs
             this.ballId = null;
@@ -248,11 +249,9 @@ class MatterObject {
         });
         els.push(barL, barLConstraint, standL, barR, barRConstraint, standR);
 
-        // add stages objects
-        const stageObjs = this.stageObjects.reloadObjects(w, h);
-        els.push(...stageObjs);
-
         Composite.add(this.engine.world, els);
+
+        this.updateStageObjects();
     }
 
     // return object's barL and barR
@@ -261,6 +260,24 @@ class MatterObject {
             left: this.barL,
             right: this.barR
         }
+    }
+
+    // add or remove objects for different stgaes
+    updateStageObjects() {
+        const stageObjs = this.stageObjects.reloadObjects(w, h);
+
+        const els = [];
+
+        if (stageObjs.leverObjects && !this.stageObjectsData.leverObjects) {
+            // add new if not in main board
+            els.push(...stageObjs.leverObjects);
+            this.stageObjectsData.leverObjects = stageObjs.leverObjects;
+        } else if (!stageObjs.leverObjects && this.stageObjectsData.leverObjects) {
+            // remove from main board
+            Composite.remove(this.stageObjectsData.leverObjects)
+        }
+
+        Composite.add(this.engine.world, els);
     }
 }
 
