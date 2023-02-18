@@ -271,7 +271,9 @@ class MatterObject {
 
     // add or remove objects for different stgaes
     updateStageObjects() {
-        const stageObjs = this.stageObjects.reloadObjects(w, h);
+        const width = this.render.options.width;
+        const height = this.render.options.height;
+        const stageObjs = this.stageObjects.reloadObjects(width, height);
 
         const els = [];
 
