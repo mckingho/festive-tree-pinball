@@ -48,33 +48,40 @@ class MatterObject {
             // body IDs
             this.ballId = null;
 
-            // events handler
-            Events.on(this.engine, 'collisionStart', function (event) {
-                const pairs = event.pairs;
-                for (let i = 0; i < pairs.length; i += 1) {
-                    const pair = pairs[i];
-                    if (pair.bodyA.id == instance.ballId) {
-                        if (pair.bodyB.onCollisionStartCustomCb) {
-                            pair.bodyB.onCollisionStartCustomCb();
-                        }
-                        if (pair.bodyB.parent && pair.bodyB.parent.id != pair.bodyB.id && pair.bodyB.parent.onCollisionStartCustomCb) {
-                            pair.bodyB.parent.onCollisionStartCustomCb();
-                        }
-                    } else if (pair.bodyB.id == instance.ballID) {
-                        if (pair.bodyA.onCollisionStartCustomCb) {
-                            pair.bodyA.onCollisionStartCustomCb();
-                        }
-                        if (pair.bodyA.parent && pair.bodyA.parent.id != pair.bodyA.id && pair.bodyA.parent.onCollisionStartCustomCb) {
-                            pair.bodyA.parent.onCollisionStartCustomCb();
-                        }
-                    }
-                }
-            });
+            this.initEventHandler();
 
             instance = this;
         }
 
         return instance;
+    }
+
+    // events handler
+    initEventHandler() {
+        // check parent body exists and callback function exists
+        const isParentCb = (body) => {
+            return body.parent && body.parent.id != body.id && body.parent.onCollisionStartCustomCb;
+        }
+
+        const runCollisionStartCb = (body) => {
+            if (body.onCollisionStartCustomCb) {
+                body.onCollisionStartCustomCb();
+            }
+            if (isParentCb(body)) {
+                body.parent.onCollisionStartCustomCb();
+            }
+        }
+
+        Events.on(this.engine, 'collisionStart', function (event) {
+            const pairs = event.pairs;
+            for (const pair of pairs) {
+                if (pair.bodyA.id == instance.ballId) {
+                    runCollisionStartCb(pair.bodyB);
+                } else if (pair.bodyB.id == instance.ballID) {
+                    runCollisionStartCb(pair.bodyA);
+                }
+            }
+        });
     }
 
     resizeRender(width, height) {
