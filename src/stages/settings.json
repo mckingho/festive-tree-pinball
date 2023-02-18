@@ -20,27 +20,27 @@
         "trunk": {
             "trunk": true,
             "faucet": true,
-            "fauetSore": 12,
+            "faucetScore": 12,
             "faucetHitRequirement": 5
         },
         "leaves1": {
             "trunk": true,
             "faucet": true,
-            "fauetSore": 15,
+            "faucetScore": 15,
             "faucetHitRequirement": 6,
             "leavesMax": 1
         },
         "leaves2": {
             "trunk": true,
             "faucet": true,
-            "fauetSore": 20,
+            "faucetScore": 20,
             "faucetHitRequirement": 7,
             "leavesMax": 2
         },
         "leaves3": {
             "trunk": true,
             "faucet": true,
-            "fauetSore": 30,
+            "faucetScore": 30,
             "faucetHitRequirement": 8,
             "leavesMax": 3
         },
