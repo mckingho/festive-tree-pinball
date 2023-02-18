@@ -2,6 +2,7 @@ import { frameThickness, ballRadius, barStandRadius, regularCenterOfMass } from 
 import StageObjects from './stages/objects.js';
 import { addScore } from './event-handler.js';
 import { getConfig } from './stages/settings.js'
+import Achievement from './stages/achievement.js';
 
 let Bodies = Matter.Bodies;
 let Body = Matter.Body;
@@ -273,7 +274,8 @@ class MatterObject {
     updateStageObjects() {
         const width = this.render.options.width;
         const height = this.render.options.height;
-        const stageObjs = this.stageObjects.reloadObjects(width, height);
+        const achievement = new Achievement();
+        const stageObjs = this.stageObjects.reloadObjects(width, height, achievement.level);
 
         const els = [];
 
@@ -283,7 +285,7 @@ class MatterObject {
             this.stageObjectsData.leverObjects = stageObjs.leverObjects;
         } else if (!stageObjs.leverObjects && this.stageObjectsData.leverObjects) {
             // remove from main board
-            Composite.remove(this.stageObjectsData.leverObjects)
+            Composite.remove(this.engine.world, this.stageObjectsData.leverObjects);
         }
 
         Composite.add(this.engine.world, els);

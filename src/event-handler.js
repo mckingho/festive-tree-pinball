@@ -3,6 +3,7 @@
 */
 import Score from './score.js';
 import Foreground from './foreground.js';
+import Object from './object.js';
 import ObjectBackground from './object-background.js';
 import Achievement from './stages/achievement.js';
 
@@ -25,6 +26,8 @@ function turnFaucet(value) {
 
     if (achievement.checkLevelUp()) {
         fg.animateLevelUp();
+        const obj = new Object();
+        obj.updateStageObjects();
         const bg = new ObjectBackground();
         bg.draw(achievement.level);
     }
