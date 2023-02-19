@@ -1,4 +1,4 @@
-import { potGeometry, seedDimension, faucetGeometry, trunkDimension, leavesGeometry } from './dimension.js';
+import { potGeometry, seedDimension, faucetGeometry, trunkDimension, leavesGeometry, giftGeometry } from './dimension.js';
 import { getConfig } from './stages/settings.js'
 
 let instance;
@@ -25,12 +25,28 @@ class ObjectBackground {
             this.trunkImg = new Image();
             this.trunkImg.src = 'resources/images/trunk.png';
 
+            this.shelfImg = new Image();
+            this.shelfImg.src = 'resources/images/shelf.svg';
+
             this.leavesImgs = [new Image(), new Image(), new Image(), new Image()];
+            this.boxImgs = [new Image(), new Image(), new Image(), new Image()];
+            this.charImgs = [new Image(), new Image(), new Image(), new Image()];
             this.trunkImg.onload = () => {
                 this.leavesImgs[0].src = 'resources/images/leaves/leaves1.png';
                 this.leavesImgs[1].src = 'resources/images/leaves/leaves2.png';
                 this.leavesImgs[2].src = 'resources/images/leaves/leaves3.png';
                 this.leavesImgs[3].src = 'resources/images/leaves/leaves4.png';
+
+                // map index to id mod 4
+                this.boxImgs[0].src = 'resources/images/giftbox4.png';
+                this.boxImgs[1].src = 'resources/images/giftbox1.png';
+                this.boxImgs[2].src = 'resources/images/giftbox2.png';
+                this.boxImgs[3].src = 'resources/images/giftbox3.png';
+
+                this.charImgs[0].src = 'resources/images/characters/snowman.png';
+                this.charImgs[1].src = 'resources/images/characters/bear.png';
+                this.charImgs[2].src = 'resources/images/characters/gingerbread.png';
+                this.charImgs[3].src = 'resources/images/characters/reindeer.png';
             }
 
             // init which and how leaves render
@@ -144,6 +160,18 @@ class ObjectBackground {
             this.ctx.drawImage(this.leavesImgs[imgIdx], -dx, dy, -width, height);
             this.ctx.restore();
         }
+    }
+
+    drawBox(id) {
+        const { dx, dy, width, height } = giftGeometry(this.canvas.width, this.canvas.height, id);
+        this.ctx.drawImage(this.boxImgs[id], dx, dy, width, height);
+    }
+
+    // draw shelf for gift box
+    // params: gift box id
+    drawShelf(id) {
+        const { shelfDx: dx, shelfDy: dy, shelfWidth: width, shelfHeight: height } = giftGeometry(this.canvas.width, this.canvas.height, id);
+        this.ctx.drawImage(this.shelfImg, dx, dy, width, height);
     }
 }
 

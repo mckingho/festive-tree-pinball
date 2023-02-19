@@ -134,6 +134,34 @@ function leavesGeometry(width, height, i) {
     };
 }
 
+// returns geometry object of gift box related image that is rendered in board,
+// including box, character, shelf
+// params: board width, height, box id
+// returns {dx, dy, height, width}
+function giftGeometry(width, height, id) {
+    const shelfWidth = width / 6;
+    const side = shelfWidth / 2;
+    const pad = 2;
+    const pos = id % 4;
+    const xMuls = [1, 1, -1, -1];
+    const centerDx = width / 2 + xMuls[pos] * width / 4;
+    const dx = centerDx - side / 2;
+    const yMuls = [-1, 1, 1, -1];
+    const dy = height / 2 + yMuls[pos] * (shelfWidth + pad);
+    const shelfDx = centerDx - shelfWidth / 2;
+    const shelfDy = dy + side;
+    return {
+        dx,
+        dy,
+        height: side,
+        width: side,
+        shelfDx,
+        shelfDy,
+        shelfWidth,
+        shelfHeight: shelfWidth / 5,
+    };
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -163,5 +191,6 @@ export {
     leverDimension,
     trunkDimension,
     leavesGeometry,
+    giftGeometry,
     regularCenterOfMass,
 };
