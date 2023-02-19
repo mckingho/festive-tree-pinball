@@ -90,6 +90,8 @@ class ObjectBackground {
 
         this.drawLoadedShelf();
 
+        this.drawLoadedFaucet(stageConfig);
+
         this.isInitDrawn = true;
 
         // starting animation
@@ -179,6 +181,19 @@ class ObjectBackground {
     drawBox(id) {
         const { dx, dy, width, height } = giftGeometry(this.canvas.width, this.canvas.height, id);
         this.ctx.drawImage(this.boxImgs[id], dx, dy, width, height);
+    }
+
+    drawLoadedShelf() {
+        if (!this.isInitDrawn) {
+            this.shelfImg.onload = () => {
+                for (let i = 0; i < 4; i += 1) {
+                    this.drawShelf(i);
+                }
+            }
+        }
+        for (let i = 0; i < 4; i += 1) {
+            this.drawShelf(i);
+        }
     }
 
     // draw shelf for gift box
