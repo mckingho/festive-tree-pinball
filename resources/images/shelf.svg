@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+    viewBox="0 0 358 44" width="358" height="44">
+    <defs>
+        <clipPath id="clip_path-shelf">
+            <rect width="358" height="44" />
+        </clipPath>
+    </defs>
+    <g clip-path="url(#clip_path-shelf)">
+        <g id="left-stand">
+            <path d="M 63 13 L 63 27.5 C 63 36.607 55.607 44 46.5 44 C 37.393 44 30 36.607 30 27.5 L 30 13 L 63 13 Z"
+                fill="rgb(223,186,161)" />
+            <path
+                d="M 41 31.5 C 41 28.464 43.464 26 46.5 26 C 49.536 26 52 28.464 52 31.5 C 52 34.536 49.536 37 46.5 37 C 43.464 37 41 34.536 41 31.5 Z"
+                fill="rgb(179,156,142)" />
+            <rect x="30" y="12" width="33" height="8" transform="matrix(1,0,0,1,0,0)" fill="rgb(167,139,121)" />
+        </g>
+        <g id="right-stand">
+            <path
+                d="M 329 13 L 329 27.5 C 329 36.607 321.607 44 312.5 44 C 303.393 44 296 36.607 296 27.5 L 296 13 L 329 13 Z"
+                fill="rgb(223,186,161)" />
+            <path
+                d="M 307 31.5 C 307 28.464 309.464 26 312.5 26 C 315.536 26 318 28.464 318 31.5 C 318 34.536 315.536 37 312.5 37 C 309.464 37 307 34.536 307 31.5 Z"
+                fill="rgb(179,156,142)" />
+            <rect x="296" y="12" width="33" height="8" transform="matrix(1,0,0,1,0,0)" fill="rgb(167,139,121)" />
+        </g>
+        <path
+            d="M 6.5 0 L 351.5 0 C 355.087 0 358 2.913 358 6.5 C 358 10.087 355.087 13 351.5 13 L 6.5 13 C 2.913 13 0 10.087 0 6.5 C 0 2.913 2.913 0 6.5 0 Z"
+            style="stroke:none;fill:#E4AB7E;stroke-miterlimit:10;" />
+    </g>
+</svg>
