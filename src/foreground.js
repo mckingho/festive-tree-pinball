@@ -150,8 +150,8 @@ class Foreground {
 
         const { dx: faucetDx, dy: faucetDy, width: faucetWidth, height: faucetHeight } = faucetGeometry(width, height);
         const { dy: potDy, width: potWidth } = potGeometry(width, height);
-        const upperDx = faucetDx + faucetWidth * 0.2; // FIXME: faucet's width is roughly 60% in img src
-        const upperWidth = faucetWidth * 0.6; // FIXME: faucet's width is roughly 60% in img src
+        const upperDx = faucetDx + faucetWidth * 0.2; // faucet's width is roughly 60% in img src
+        const upperWidth = faucetWidth * 0.6; // faucet's width is roughly 60% in img src
         const dy = faucetDy + faucetHeight;
         const wateringHeight = potDy - dy;
         const lowerWidth = potWidth;
