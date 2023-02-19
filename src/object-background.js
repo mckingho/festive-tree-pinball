@@ -173,6 +173,15 @@ class ObjectBackground {
         const { shelfDx: dx, shelfDy: dy, shelfWidth: width, shelfHeight: height } = giftGeometry(this.canvas.width, this.canvas.height, id);
         this.ctx.drawImage(this.shelfImg, dx, dy, width, height);
     }
+
+    // draw characters above gift box
+    // params: gift box id
+    drawCharacter(id) {
+        const { dx, dy, width } = giftGeometry(this.canvas.width, this.canvas.height, id);
+        const w2h = this.charImgs[id].width / this.charImgs[id].height;
+        const drawHeight = width / w2h;
+        this.ctx.drawImage(this.charImgs[id], dx, dy - drawHeight, width, drawHeight);
+    }
 }
 
 export default ObjectBackground;
