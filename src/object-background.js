@@ -74,21 +74,9 @@ class ObjectBackground {
         // get stage render config
         const stageConfig = getConfig(stage);
 
-        if (!this.isInitDrawn) {
-            this.potImg.onload = () => {
-                this.drawPot();
-            }
-        }
-        this.drawPot()
+        this.drawLoadedPot();
 
-        if (!this.isInitDrawn) {
-            this.seedImg.onload = () => {
-                this.drawSeed();
-            }
-        }
-        if (stageConfig.seed) {
-            this.drawSeed()
-        }
+        this.drawLoadedSeed(stageConfig);
 
         if (stageConfig.trunk) {
             this.drawTrunk()
@@ -100,16 +88,7 @@ class ObjectBackground {
             }
         }
 
-        if (!this.isInitDrawn) {
-            this.faucetImg.onload = () => {
-                if (stageConfig.faucet) {
-                    this.drawFaucet();
-                }
-            }
-        }
-        if (stageConfig.faucet) {
-            this.drawFaucet()
-        }
+        this.drawLoadedShelf();
 
         this.isInitDrawn = true;
 
@@ -120,11 +99,33 @@ class ObjectBackground {
         }
     }
 
+    drawLoadedPot() {
+        if (!this.isInitDrawn) {
+            this.potImg.onload = () => {
+                this.drawPot();
+            }
+        }
+        this.drawPot()
+    }
+
     drawPot() {
         let { dx, dy, width, height } = potGeometry(this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.potImg, dx, dy, width, height);
         this.potY = dy;
         this.potWidth = width;
+    }
+
+    drawLoadedSeed(config) {
+        if (!this.isInitDrawn) {
+            this.seedImg.onload = () => {
+                if (config.seed) {
+                    this.drawSeed();
+                }
+            }
+        }
+        if (config.seed) {
+            this.drawSeed()
+        }
     }
 
     drawSeed() {
@@ -133,6 +134,19 @@ class ObjectBackground {
         let dx = w / 2 - width / 2;
         let dy = this.potY - height - this.seedYOffset;
         this.ctx.drawImage(this.seedImg, dx, dy, width, height);
+    }
+
+    drawLoadedFaucet(config) {
+        if (!this.isInitDrawn) {
+            this.faucetImg.onload = () => {
+                if (config.faucet) {
+                    this.drawFaucet();
+                }
+            }
+        }
+        if (config.faucet) {
+            this.drawFaucet()
+        }
     }
 
     drawFaucet() {
