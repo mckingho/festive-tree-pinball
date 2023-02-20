@@ -85,6 +85,7 @@ class ObjectBackground {
         if (stageConfig.leavesMax && stageConfig.leavesMax > 0) {
             for (let i = 0; i < stageConfig.leavesMax; i += 1) {
                 this.drawLeaves(i);
+                this.drawBox(i);
             }
         }
 
