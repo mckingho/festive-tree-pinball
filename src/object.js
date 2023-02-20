@@ -163,8 +163,15 @@ class MatterObject {
         els.push(hatPartA, hatPartB, hatPartC, hatPartD, hatPartE, hatPartF);
 
         // ball
-        let r = ballRadius(w);
-        const ball = Bodies.circle(150, 150, r, {
+        const r = ballRadius(w);
+        const ballRand = Math.random();
+        let ballDx = w / 2 - w / 12 + (ballRand * w / 6);
+        if (ballDx <= w / 2) {
+            ballDx -= r * 2;
+        } else {
+            ballDx += r * 2;
+        }
+        const ball = Bodies.circle(ballDx, h / 2, r, {
             restitution: 1,
             render: {
                 fillStyle: '#ECECEC',
