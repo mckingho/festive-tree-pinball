@@ -1,5 +1,5 @@
 import { getConfig } from './settings.js'
-import { faucetGeometry, leverDimension } from '../dimension.js';
+import { faucetGeometry, leverDimension, ornamentRadius, leavesGeometry } from '../dimension.js';
 import { turnFaucet } from '../event-handler.js';
 
 const Bodies = Matter.Bodies;
@@ -30,6 +30,13 @@ class StageObjects {
 
         if (stageConfig.faucet) {
             this.objects.leverObjects = this.loadLever(width, height);
+        }
+
+        if (stageConfig.leavesMax > 0) {
+            this.objects.ornamentObjects = [undefined, undefined, undefined, undefined];
+            for (let i = 0; i < stageConfig.leavesMax; i += 1) {
+                this.objects.ornamentObjects[i] = this.loadOrnament(width, height, i);
+            }
         }
 
         return this.objects;
@@ -75,6 +82,24 @@ class StageObjects {
             pointB: { x: 0, y: 0 }
         });
         return [lever, constraint];
+    }
+
+    /// ornament for each leaves level
+    loadOrnament(width, height, leavesLevel) {
+        const r = ornamentRadius(width);
+        const { dy: lDy, width: lWidth, height: lHeight } = leavesGeometry(width, height, leavesLevel);
+        const dx = width / 2 - lWidth / 2 + Math.random() * lWidth / 2;
+        const dy = lDy + lHeight * 4 / 5;
+
+        const ornament = Bodies.polygon(dx, dy, r, 4);
+        const constraint = Contraint.create({
+            pointA: { x: dx, y: dy - r - 8 }, // hang point
+            bodyB: ornament,
+            pointB: { x: 0, y: 0 },
+            stiffness: 0.001,
+            damping: 0.05,
+        });
+        return [ornament, constraint];
     }
 }
 

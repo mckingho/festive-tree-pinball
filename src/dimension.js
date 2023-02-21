@@ -5,6 +5,7 @@ const MIN_FRAME_THICKNESS = 16;
 const MIN_BALL_RADIUS = 8;
 const MIN_BAR_STAND_RADIUS = 5;
 const MIN_LEVER_WIDTH = 5;
+const MIN_ORNAMENT_RADIUS = 16;
 
 function maxBoardDimension(maxWidth, maxHeight) {
     let boardWidth = 0;
@@ -162,6 +163,11 @@ function giftGeometry(width, height, id) {
     };
 }
 
+// calculate the ornament radius, scaling same with frame thickness
+function ornamentRadius(width) {
+    return Math.max(MIN_ORNAMENT_RADIUS, Math.floor(width / 100));
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -192,5 +198,6 @@ export {
     trunkDimension,
     leavesGeometry,
     giftGeometry,
+    ornamentRadius,
     regularCenterOfMass,
 };
