@@ -173,7 +173,8 @@ class MatterObject {
         } else {
             ballDx += r * 2;
         }
-        const ball = Bodies.circle(ballDx, h / 2, r, {
+        const ballDy = h / 2;
+        const ball = Bodies.circle(ballDx, ballDy, r, {
             restitution: 1,
             render: {
                 fillStyle: '#ECECEC',
@@ -182,6 +183,9 @@ class MatterObject {
             }
         });
         this.ballId = ball.id;
+        this.ball = ball;
+        this.ballDx = ballDx;
+        this.ballDy = ballDy;
         els.push(ball);
 
         // base
@@ -308,6 +312,11 @@ class MatterObject {
         }
 
         Composite.add(this.engine.world, els);
+    }
+
+    // reset ball position to init position
+    resetBall() {
+        Body.set(this.ball, 'position', { x: this.ballDx, y: this.ballDy });
     }
 }
 

@@ -3,6 +3,7 @@ import MatterObject from './object.js';
 import ObjectBackground from './object-background.js';
 import { handleKeyDown, handleClick } from './controller.js';
 import Foreground from './foreground.js';
+import env from './env.json' assert { type: "json" };
 
 // max full board size
 let boardWidth = 0;
@@ -17,6 +18,7 @@ let fg; // foreground
 let barKeyDownFn;
 let barLeftClickFn;
 let barRightClickFn;
+let resetBallFn;
 
 function resizeBoard() {
     ({ boardWidth, boardHeight } = maxBoardDimension(window.innerWidth, window.innerHeight));
@@ -71,6 +73,11 @@ function resizeBoard() {
     barRightClickFn = () => { handleClick(false, true, barL, barR) };
     controllerLeft.addEventListener("click", barLeftClickFn);
     controllerRight.addEventListener("click", barRightClickFn);
+
+    // hotkey to reset ball
+    window.removeEventListener("keypress", resetBallFn);
+    resetBallFn = (event) => { if (env.dev && event.key == 'r') object.resetBall() };
+    window.addEventListener("keypress", resetBallFn);
 }
 
 window.addEventListener('load', resizeBoard);
