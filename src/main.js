@@ -1,7 +1,7 @@
 import { maxBoardDimension, boardControllerHeight, MATTER_MARGIN } from './dimension.js';
 import MatterObject from './object.js';
 import ObjectBackground from './object-background.js';
-import { handleKeyDown, handleKeyUp, handleClick } from './controller.js';
+import { handleKeyDown, handleClick } from './controller.js';
 import Foreground from './foreground.js';
 
 // max full board size
@@ -15,7 +15,6 @@ let fg; // foreground
 
 // Store the event function of controllers
 let barKeyDownFn;
-let barKeyUpFn;
 let barLeftClickFn;
 let barRightClickFn;
 
@@ -62,11 +61,8 @@ function resizeBoard() {
     // reset event of controller object
     let { left: barL, right: barR } = object.getControlBars();
     window.removeEventListener('keydown', barKeyDownFn);
-    window.removeEventListener('keyup', barKeyUpFn);
     barKeyDownFn = (event) => { handleKeyDown(event, barL, barR) };
-    barKeyUpFn = (event) => { handleKeyUp(event, barL, barR) };
     window.addEventListener("keydown", barKeyDownFn);
-    window.addEventListener("keyup", barKeyUpFn);
     let controllerLeft = document.getElementById('btn-left');
     let controllerRight = document.getElementById('btn-right');
     controllerLeft.removeEventListener('click', barLeftClickFn);

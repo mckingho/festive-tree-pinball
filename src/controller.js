@@ -23,9 +23,6 @@ function handleKeyDown(evt, barL, barR) {
     }
 }
 
-function handleKeyUp(evt, barL, barR) {
-}
-
 function handleClick(isLeft, isRight, barL, barR) {
     if (isLeft) {
         applyLeftForce(barL);
@@ -37,6 +34,5 @@ function handleClick(isLeft, isRight, barL, barR) {
 
 export {
     handleKeyDown,
-    handleKeyUp,
     handleClick,
 }
