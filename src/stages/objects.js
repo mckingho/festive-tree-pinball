@@ -1,6 +1,6 @@
 import { getConfig } from './settings.js'
 import { faucetGeometry, leverDimension, ornamentRadius, leavesGeometry } from '../dimension.js';
-import { turnFaucet } from '../event-handler.js';
+import { hitOrnament, turnFaucet } from '../event-handler.js';
 
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
@@ -73,7 +73,7 @@ class StageObjects {
             parts: [bar1, bar2, bar1Circle1, bar1Circle2, bar2Circle1, bar2Circle2]
         });
         lever.onCollisionStartCustomCb = () => {
-            const stageConfig = getConfig(instance.stage);
+            const stageConfig = getConfig(this.stage);
             turnFaucet(stageConfig.faucetScore);
         }
         const constraint = Constraint.create({
@@ -88,21 +88,32 @@ class StageObjects {
     loadOrnament(width, height, leavesLevel) {
         const r = ornamentRadius(width);
         const { dy: lDy, width: lWidth, height: lHeight } = leavesGeometry(width, height, leavesLevel);
-        const dx = width / 2 - lWidth / 2 + Math.random() * lWidth;
+        const hangWidth = lWidth * 0.6; // center width for hanging ornament
+        const dx = width / 2 - hangWidth / 2 + Math.random() * hangWidth;
         const dy = lDy + lHeight * 4 / 5;
 
         const fillStyles = ["#ED7014", "#8B4000", "#EE9A40", "#A91B0D"];
-        const strokeStyle = ["#F8D568", "#FFBF00", "#DEB887", "#D21404"];
+        const strokeStyles = ["#F8D568", "#FFBF00", "#DEB887", "#D21404"];
         const render = {
             fillStyle: fillStyles[leavesLevel],
-            strokeStyle: strokeStyle[leavesLevel],
+            strokeStyle: strokeStyles[leavesLevel],
             lineWidth: 1,
         };
         const ornament = Bodies.polygon(dx, dy, 4, r, { render });
+        ornament.onCollisionStartCustomCb = () => {
+            const stageConfig = getConfig(this.stage);
+            hitOrnament(stageConfig.ornamentScore, leavesLevel);
+        }
         const constraintData = {
             pointA: { x: dx, y: dy - r - 8 }, // hang point
             bodyB: ornament,
             pointB: { x: 0, y: 0 },
+            render: {
+                visible: true,
+                lineWidth: 1,
+                strokeStyle: strokeStyles[leavesLevel],
+                anchors: false,
+            },
         };
         // varying constraints
         if (leavesLevel % 2 == 1) {

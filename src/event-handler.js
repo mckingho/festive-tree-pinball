@@ -34,7 +34,20 @@ function turnFaucet(value) {
     fg.draw();
 }
 
+function hitOrnament(value, i) {
+    const score = new Score();
+    score.add(value);
+
+    const achievement = new Achievement();
+    achievement.hits.ornament[i] += 1;
+
+    const bg = new ObjectBackground();
+    bg.setShowCharacter(achievement.hits.ornament.map((h) => h % 2 == 1));
+    bg.draw(achievement.level);
+}
+
 export {
     addScore,
     turnFaucet,
+    hitOrnament,
 };

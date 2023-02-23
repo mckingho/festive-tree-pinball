@@ -12,6 +12,7 @@ class ObjectBackground {
             this.isInitDrawn = false; // set true after first draw() function call
             this.potY = 0; // pot y position. set when pot is drawn
             this.seedYOffset = 60; // seed y position offset upwards. used for starting animation
+            this.isShowCharacters = [false, false, false, false];
 
             this.potImg = new Image();
             this.potImg.src = 'resources/images/pot.png';
@@ -86,6 +87,9 @@ class ObjectBackground {
             for (let i = 0; i < stageConfig.leavesMax; i += 1) {
                 this.drawLeaves(i);
                 this.drawBox(i);
+                if (this.isShowCharacters[i]) {
+                    this.drawCharacter(i);
+                }
             }
         }
 
@@ -202,6 +206,13 @@ class ObjectBackground {
     drawShelf(id) {
         const { shelfDx: dx, shelfDy: dy, shelfWidth: width, shelfHeight: height } = giftGeometry(this.canvas.width, this.canvas.height, id);
         this.ctx.drawImage(this.shelfImg, dx, dy, width, height);
+    }
+
+    // set isShow flag of characters
+    setShowCharacter(isShows) {
+        if (isShows.length == 4) {
+            this.isShowCharacters = isShows;
+        }
     }
 
     // draw characters above gift box

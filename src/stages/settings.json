@@ -5,7 +5,8 @@
         "leaves1",
         "leaves2",
         "leaves3",
-        "leaves4"
+        "leaves4",
+        "star"
     ],
     "config": {
         "general": {
@@ -15,38 +16,47 @@
             "seed": true,
             "faucet": true,
             "faucetScore": 10,
-            "faucetHitRequirement": 2
+            "faucetHitRequirement": 1
         },
         "trunk": {
             "trunk": true,
             "faucet": true,
             "faucetScore": 12,
-            "faucetHitRequirement": 5
+            "faucetHitRequirement": 2
         },
         "leaves1": {
             "trunk": true,
             "faucet": true,
             "faucetScore": 15,
-            "faucetHitRequirement": 6,
-            "leavesMax": 1
+            "faucetHitRequirement": 3,
+            "leavesMax": 1,
+            "ornamentScore": 5
         },
         "leaves2": {
             "trunk": true,
             "faucet": true,
             "faucetScore": 20,
-            "faucetHitRequirement": 7,
-            "leavesMax": 2
+            "faucetHitRequirement": 4,
+            "leavesMax": 2,
+            "ornamentScore": 10
         },
         "leaves3": {
             "trunk": true,
             "faucet": true,
             "faucetScore": 30,
-            "faucetHitRequirement": 8,
-            "leavesMax": 3
+            "faucetHitRequirement": 5,
+            "leavesMax": 3,
+            "ornamentScore": 15
         },
         "leaves4": {
             "trunk": true,
             "leavesMax": 4,
+            "ornamentScore": 20
+        },
+        "star": {
+            "trunk": true,
+            "leavesMax": 4,
+            "ornamentScore": 20,
             "star": true,
             "starScore": 100
         }
