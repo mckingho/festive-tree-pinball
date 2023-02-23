@@ -44,7 +44,9 @@ class MatterObject {
 
             // include stages objects
             this.stageObjects = new StageObjects();
-            this.stageObjectsData = {};
+            this.stageObjectsData = {
+                ornamentObjects: [undefined, undefined, undefined, undefined], // ornament objects for each leaves level
+            };
 
             // body IDs
             this.ballId = null;
@@ -293,6 +295,16 @@ class MatterObject {
         } else if (!stageObjs.leverObjects && this.stageObjectsData.leverObjects) {
             // remove from main board
             Composite.remove(this.engine.world, this.stageObjectsData.leverObjects);
+        }
+
+        // add ornament if not in main board
+        // only adding is needed
+        const ornamentsLen = (stageObjs.ornamentObjects && stageObjs.ornamentObjects.length) || 0;
+        for (let i = 0; i < ornamentsLen; i += 1) {
+            if (!this.stageObjectsData.ornamentObjects[i]) {
+                els.push(...stageObjs.ornamentObjects[i]);
+                this.stageObjectsData.ornamentObjects[i] = stageObjs.ornamentObjects[i];
+            }
         }
 
         Composite.add(this.engine.world, els);

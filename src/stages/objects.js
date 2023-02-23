@@ -33,9 +33,9 @@ class StageObjects {
         }
 
         if (stageConfig.leavesMax > 0) {
-            this.objects.ornamentObjects = [undefined, undefined, undefined, undefined];
+            this.objects.ornamentObjects = [];
             for (let i = 0; i < stageConfig.leavesMax; i += 1) {
-                this.objects.ornamentObjects[i] = this.loadOrnament(width, height, i);
+                this.objects.ornamentObjects.push(this.loadOrnament(width, height, i));
             }
         }
 
@@ -88,17 +88,28 @@ class StageObjects {
     loadOrnament(width, height, leavesLevel) {
         const r = ornamentRadius(width);
         const { dy: lDy, width: lWidth, height: lHeight } = leavesGeometry(width, height, leavesLevel);
-        const dx = width / 2 - lWidth / 2 + Math.random() * lWidth / 2;
+        const dx = width / 2 - lWidth / 2 + Math.random() * lWidth;
         const dy = lDy + lHeight * 4 / 5;
 
-        const ornament = Bodies.polygon(dx, dy, r, 4);
-        const constraint = Contraint.create({
+        const fillStyles = ["#ED7014", "#8B4000", "#EE9A40", "#A91B0D"];
+        const strokeStyle = ["#F8D568", "#FFBF00", "#DEB887", "#D21404"];
+        const render = {
+            fillStyle: fillStyles[leavesLevel],
+            strokeStyle: strokeStyle[leavesLevel],
+            lineWidth: 1,
+        };
+        const ornament = Bodies.polygon(dx, dy, 4, r, { render });
+        const constraintData = {
             pointA: { x: dx, y: dy - r - 8 }, // hang point
             bodyB: ornament,
             pointB: { x: 0, y: 0 },
-            stiffness: 0.001,
-            damping: 0.05,
-        });
+        };
+        // varying constraints
+        if (leavesLevel % 2 == 1) {
+            constraintData.stiffness = 0.01;
+            constraintData.damping = 0.01 * leavesLevel;
+        }
+        const constraint = Constraint.create(constraintData);
         return [ornament, constraint];
     }
 }
