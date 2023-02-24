@@ -159,7 +159,7 @@ function giftGeometry(width, height, id) {
         shelfDx,
         shelfDy,
         shelfWidth,
-        shelfHeight: shelfWidth / 5,
+        shelfHeight: shelfWidth * 0.123, // ratio of resource
     };
 }
 
