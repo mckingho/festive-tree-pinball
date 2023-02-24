@@ -143,6 +143,10 @@ class StageObjects {
                 lineWidth: 1
             }
         }, true);
+        star.onCollisionStartCustomCb = () => {
+            const stageConfig = getConfig(this.stage);
+            addScore(stageConfig.starScore);
+        }
         const constraint = Constraint.create({
             pointA: { x: dx, y: dy },
             bodyB: star,
