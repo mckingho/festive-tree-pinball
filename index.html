@@ -12,6 +12,15 @@
             font-family: Helvetica, Arial, sans-serif
         }
 
+        .controller-btn {
+            flex: 1;
+            height: 100%;
+            border-radius: .5em;
+            text-align: center;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+            color: #CFD4D9;
+        }
+
     </style>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
@@ -23,9 +32,15 @@
         <div id="board"></div>
         <canvas id="board-foreground" style="z-index: 1; position: absolute;"></canvas>
     </div>
-    <div id="controller" style="margin: auto;">
-        <div id="btn-left" style="width: 50%; height: 100%; float:left; text-align: center;">L</div>
-        <div id="btn-right" style="width: 50%; height: 100%; float:right; text-align: center;">R</div>
+    <div id="controller" style="margin: auto; display: flex;">
+        <div id="btn-left" class="controller-btn"
+            style="float:left; border: solid 1px #028A0F; background: linear-gradient(#03AC13, #028A0F)">
+            <p>A</p>
+        </div>
+        <div id="btn-right" class="controller-btn"
+            style="float:right; border: solid 1px #990F02; background: linear-gradient(#D21404, #990F02)">
+            <p>D</p>
+        </div>
     </div>
 </body>
 
