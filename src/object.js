@@ -238,13 +238,19 @@ class MatterObject {
             pointA: { x: barLX - pivotOffset, y: barY },
             pointB: { x: -pivotOffset, y: 0 },
             bodyB: barL,
-            length: 0
+            length: 0,
+            render: {
+                strokeStyle: '#028A0F',
+            },
         });
         let barRConstraint = Constraint.create({
             pointA: { x: barRX + pivotOffset, y: barY },
             pointB: { x: pivotOffset, y: 0 },
             bodyB: barR,
-            length: 0
+            length: 0,
+            render: {
+                strokeStyle: '#990F02',
+            },
         });
         // set controllers
         this.barL = barL;
