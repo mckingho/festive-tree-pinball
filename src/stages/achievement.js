@@ -37,7 +37,7 @@ class Achievement {
                 this.level += 1;
                 return true;
             }
-        } else if (this.level == leavesMaxLevel) {
+        } else if (this.level == this.leavesMaxLevel) {
             // level up from leaves to star
             // check every ornament hit % 2 == 1, i.e. all toggle on
             if (this.hits.ornament.every((h) => h % 2 == 1)) {

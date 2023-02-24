@@ -1,10 +1,11 @@
 import { getConfig } from './settings.js'
-import { faucetGeometry, leverDimension, ornamentRadius, leavesGeometry } from '../dimension.js';
+import { faucetGeometry, leverDimension, ornamentRadius, leavesGeometry, starGeometry } from '../dimension.js';
 import { hitOrnament, turnFaucet } from '../event-handler.js';
 
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Constraint = Matter.Constraint;
+const Vertices = Matter.Vertices;
 
 let instance;
 /// matter objects to be added in different levels,
@@ -37,6 +38,10 @@ class StageObjects {
             for (let i = 0; i < stageConfig.leavesMax; i += 1) {
                 this.objects.ornamentObjects.push(this.loadOrnament(width, height, i));
             }
+        }
+
+        if (stageConfig.star) {
+            this.objects.starObjects = this.loadStar(width, height);
         }
 
         return this.objects;
@@ -122,6 +127,32 @@ class StageObjects {
         }
         const constraint = Constraint.create(constraintData);
         return [ornament, constraint];
+    }
+
+    /// star at tree top
+    loadStar(width, height) {
+        const { dx, dy, height: starHeight } = starGeometry(width, height);
+        // star polygon vertices path with 100*100 dimension
+        const paths = [50, 0, 63, 38, 100, 38, 69, 59, 82, 100, 50, 75, 18, 100, 31, 59, 0, 38, 37, 38];
+        const newPaths = paths.map((p) => p / 100 * starHeight);
+        const verts = Vertices.fromPath(newPaths.join(' '));
+        const star = Bodies.fromVertices(dx, dy, verts, {
+            render: {
+                fillStyle: "#FFFF00",
+                strokeStyle: "#FFFD74",
+                lineWidth: 1
+            }
+        }, true);
+        const constraint = Constraint.create({
+            pointA: { x: dx, y: dy },
+            bodyB: star,
+            pointB: { x: 0, y: 0 },
+            render: {
+                anchors: false,
+            },
+        });
+
+        return [star, constraint];
     }
 }
 

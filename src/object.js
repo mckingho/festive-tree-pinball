@@ -15,6 +15,9 @@ let Runner = Matter.Runner;
 
 let instance;
 
+// set concave decomposition support library
+Matter.Common.setDecomp(decomp);
+
 class MatterObject {
     constructor(renderElement, width, height) {
         if (!instance) {
@@ -309,6 +312,13 @@ class MatterObject {
                 els.push(...stageObjs.ornamentObjects[i]);
                 this.stageObjectsData.ornamentObjects[i] = stageObjs.ornamentObjects[i];
             }
+        }
+
+        // add star if not in main board
+        // only adding is needed
+        if (stageObjs.starObjects && !this.stageObjectsData.starObjects) {
+            els.push(...stageObjs.starObjects);
+            this.stageObjectsData.starObjects = stageObjs.starObjects;
         }
 
         Composite.add(this.engine.world, els);

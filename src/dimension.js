@@ -168,6 +168,18 @@ function ornamentRadius(width) {
     return Math.max(MIN_ORNAMENT_RADIUS, Math.floor(width / 100));
 }
 
+// star's geometry
+// returns {dx, dy, height}
+function starGeometry(width, height) {
+    const starHeight = Math.floor(height / 12);
+    const { dy } = leavesGeometry(width, height, 3); // highest leaves
+    return {
+        dx: width / 2,
+        dy,
+        height: starHeight,
+    };
+}
+
 // calculate center of mass of regular shape
 // vertices: array of {x, y}
 // return {x, y} coordinate
@@ -199,5 +211,6 @@ export {
     leavesGeometry,
     giftGeometry,
     ornamentRadius,
+    starGeometry,
     regularCenterOfMass,
 };
