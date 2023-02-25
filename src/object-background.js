@@ -66,11 +66,12 @@ class ObjectBackground {
     }
 
     draw(stage = 0) {
-        let w = this.canvas.width;
-        let h = this.canvas.height;
+        const w = this.canvas.width;
+        const h = this.canvas.height;
 
-        this.ctx.fillStyle = 'grey';
-        this.ctx.fillRect(0, 0, w, h);
+        this.ctx.clearRect(0, 0, w, h);
+
+        this.drawWall();
 
         // get stage render config
         const stageConfig = getConfig(stage);
@@ -103,6 +104,21 @@ class ObjectBackground {
         if (this.seedYOffset > 0) {
             this.seedYOffset = this.seedYOffset - 1;
             window.requestAnimationFrame(() => { this.draw(); });
+        }
+    }
+
+    drawWall() {
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+        const cols = 5;
+        const colW = Math.ceil(w / cols);
+        const rs = [0.75, 0.8];
+        for (let i = 0; i < cols; i += 1) {
+            const grd = this.ctx.createLinearGradient(0, 0, 0, h);
+            grd.addColorStop(0, 'rgba(76, 84, 69, 1)');
+            grd.addColorStop(1, 'rgba(76, 84, 69, ' + rs[i % 2] + ')');
+            this.ctx.fillStyle = grd;
+            this.ctx.fillRect(colW * i, 0, colW, h);
         }
     }
 
