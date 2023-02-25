@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+    viewBox="0 0 240 240" width="240" height="240">
+    <g id="month">
+        <path
+            d="M 6.5 20 L 233.5 20 C 236.75 20 240 23.25 240 26.5 L 240 100 L 0 100 L 0 26.5 C 0 23.25 3.25 20 6.5 20 Z"
+            fill="#6D1919" />
+    </g>
+    <g id="day">
+        <path
+            d="M 0 100 L 240 100 L 240 233.5 C 240 236.75 236.75 240 233.5 240 L 6.5 240 C 3.25 240 0 236.75 0 233.5 Z"
+            stroke="#6D1919" fill="#F0E7DA" />
+    </g>
+    <g id="rings">
+        <path
+            d="M 50 6.5 C 50 3.25 53.25 0 56.5 0 C 59.75 0 63 3.25 63 6.5 L 63 33.5 C 63 36.75 59.75 40 56.5 40 C 53.25 40 50 36.75 50 33.5 Z"
+            fill="#B7B7BD" />
+        <path
+            d="M 177 6.5 C 177 3.25 180.25 0 183.5 0 C 186.75 0 190 3.25 190 6.5 L 190 33.5 C 190 36.75 186.75 40 183.5 40 C 180.25 40 177 36.75 177 33.5 Z"
+            fill="#B7B7BD" />
+    </g>
+</svg>
