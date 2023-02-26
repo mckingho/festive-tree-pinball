@@ -113,9 +113,19 @@ class MatterObject {
         // left, right, bottom of frame 
         let frameOffsetH = h / 4;
         let frameLength = h - frameOffsetH;
-        els.push(Bodies.rectangle(frT / 2, frameOffsetH + frameLength / 2, frT, frameLength, { isStatic: true }));
-        els.push(Bodies.rectangle(w - frT / 2, frameOffsetH + frameLength / 2, frT, frameLength, { isStatic: true }));
-        els.push(Bodies.rectangle(w / 2, h - frT / 2, w - frT * 2, frT, { isStatic: true }));
+        const frameRender = {
+            fillStyle: 'rgba(0, 0, 0, 0)',
+            strokeStyle: 'rgba(0, 0, 0, 0.5)',
+            lineWidth: 1,
+        };
+        els.push(Bodies.rectangle(frT / 2, frameOffsetH + frameLength / 2, frT, frameLength, {
+            isStatic: true,
+            render: frameRender,
+        }));
+        els.push(Bodies.rectangle(w - frT / 2, frameOffsetH + frameLength / 2, frT, frameLength, {
+            isStatic: true,
+            render: frameRender,
+        }));
 
         // top hat
         let hatFrameRender = {
@@ -192,6 +202,16 @@ class MatterObject {
         els.push(ball);
 
         // base
+        const baseRenderL = {
+            fillStyle: 'rgba(2, 138, 15, 0.5)',
+            strokeStyle: 'rgba(0, 0, 0, 0.5)',
+            lineWidth: 1,
+        };
+        const baseRenderR = {
+            fillStyle: 'rgba(153, 15, 2, 0.5)',
+            strokeStyle: 'rgba(0, 0, 0, 0.5)',
+            lineWidth: 1,
+        };
         let baseSide = w / 4;
         let baseY = h - 2 * baseSide; // base starting y coordinate
         let vertices = [
@@ -200,14 +220,14 @@ class MatterObject {
             { x: frT + baseSide, y: baseY + baseSide },
         ];
         let comL = regularCenterOfMass(vertices);
-        els.push(Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true }));
+        els.push(Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true, render: baseRenderL }));
         let vertices2 = [
             { x: w - frT, y: baseY },
             { x: w - frT, y: baseY + baseSide },
             { x: w - frT - baseSide, y: baseY + baseSide },
         ];
         let comR = regularCenterOfMass(vertices2);
-        els.push(Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true }));
+        els.push(Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true, render: baseRenderR }));
 
         // bars
         let barRenderL = {
