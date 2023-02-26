@@ -29,6 +29,9 @@ class ObjectBackground {
             this.shelfImg = new Image();
             this.shelfImg.src = 'resources/images/shelf.svg';
 
+            this.calendarImg = new Image();
+            this.calendarImg.src = 'resources/images/calendar.svg';
+
             this.leavesImgs = [new Image(), new Image(), new Image(), new Image()];
             this.boxImgs = [new Image(), new Image(), new Image(), new Image()];
             this.charImgs = [new Image(), new Image(), new Image(), new Image()];
@@ -95,6 +98,8 @@ class ObjectBackground {
         }
 
         this.drawLoadedShelf();
+
+        this.drawLoadedCalendar();
 
         this.drawLoadedFaucet(stageConfig);
 
@@ -244,6 +249,29 @@ class ObjectBackground {
         const w2h = this.charImgs[id].width / this.charImgs[id].height;
         const drawHeight = width / w2h;
         this.ctx.drawImage(this.charImgs[id], dx, dy - drawHeight, width, drawHeight);
+    }
+
+    drawLoadedCalendar() {
+        if (!this.isInitDrawn) {
+            this.calendarImg.onload = () => {
+                this.drawCaldendar();
+            }
+        }
+        this.drawCalendar()
+    }
+
+    drawCalendar() {
+        // below right bottom shelf
+        const shelfId = 1;
+        const {
+            shelfDx: dx,
+            shelfDy,
+            shelfWidth: width,
+            shelfHeight,
+        } = giftGeometry(this.canvas.width, this.canvas.height, shelfId);
+
+        const dy = shelfDy + shelfHeight + 4;
+        this.ctx.drawImage(this.calendarImg, dx, dy, width, width);
     }
 }
 

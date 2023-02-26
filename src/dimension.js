@@ -147,7 +147,7 @@ function giftGeometry(width, height, id) {
     const xMuls = [1, 1, -1, -1];
     const centerDx = width / 2 + xMuls[pos] * width / 4;
     const dx = centerDx - side / 2;
-    const yMuls = [-1, 1, 1, -1];
+    const yMuls = [-2, 0, 1, -1];
     const dy = height / 2 + yMuls[pos] * (shelfWidth + pad);
     const shelfDx = centerDx - shelfWidth / 2;
     const shelfDy = dy + side;
