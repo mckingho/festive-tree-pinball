@@ -110,14 +110,20 @@ class ObjectBackground {
     drawWall() {
         const w = this.canvas.width;
         const h = this.canvas.height;
+
+        if (!this.wallGradients) {
+            this.wallGradients = [0.75, 0.8].map((alpha) => {
+                const grd = this.ctx.createLinearGradient(0, 0, 0, h);
+                grd.addColorStop(0, 'rgba(76, 84, 69, 1)');
+                grd.addColorStop(1, 'rgba(76, 84, 69, ' + alpha + ')');
+                return grd;
+            });
+        }
+
         const cols = 5;
         const colW = Math.ceil(w / cols);
-        const rs = [0.75, 0.8];
         for (let i = 0; i < cols; i += 1) {
-            const grd = this.ctx.createLinearGradient(0, 0, 0, h);
-            grd.addColorStop(0, 'rgba(76, 84, 69, 1)');
-            grd.addColorStop(1, 'rgba(76, 84, 69, ' + rs[i % 2] + ')');
-            this.ctx.fillStyle = grd;
+            this.ctx.fillStyle = this.wallGradients[i % 2];
             this.ctx.fillRect(colW * i, 0, colW, h);
         }
     }
