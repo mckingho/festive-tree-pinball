@@ -56,6 +56,13 @@ class ObjectBackground {
             // init which and how leaves render
             this.leavesLoadIndices = Array(4).fill().map(() => Math.floor(Math.random() * 8));
 
+            // for calendar display
+            const today = new Date();
+            this.date1 = Math.floor(today.getDate() / 10);
+            this.date2 = today.getDate() % 10;
+            this.month1 = Math.floor((today.getMonth() + 1) / 10);
+            this.month2 = (today.getMonth() + 1) % 10;
+
             instance = this;
         }
 
@@ -254,10 +261,10 @@ class ObjectBackground {
     drawLoadedCalendar() {
         if (!this.isInitDrawn) {
             this.calendarImg.onload = () => {
-                this.drawCaldendar();
+                this.drawCalendar();
             }
         }
-        this.drawCalendar()
+        this.drawCalendar();
     }
 
     drawCalendar() {
@@ -270,8 +277,38 @@ class ObjectBackground {
             shelfHeight,
         } = giftGeometry(this.canvas.width, this.canvas.height, shelfId);
 
-        const dy = shelfDy + shelfHeight + 4;
+        const margin = 4;
+        const dy = shelfDy + shelfHeight + margin;
         this.ctx.drawImage(this.calendarImg, dx, dy, width, width);
+
+        // draw month and date digit
+        // use dimension based on the calendar image resource
+        const monthHeight = 80;
+        // assume cap height * 1.5 = height,
+        // and shift downwards half of descendant,
+        // so shift height = 1.25 * cap height
+        // i.e. shift height = 1.25 * height / 1.5
+        const monthShiftHeight = monthHeight * 1.25 / 1.5;
+        const ringHeight = 20;
+        const monthHeightOffset = width * (ringHeight + monthShiftHeight) / 240;
+        const monthFont = width * monthHeight / 240;
+        this.ctx.font = monthFont + 'px Helvetica';
+        const month1Metric = this.ctx.measureText(this.month1);
+        const monthPadding = 2;
+        this.ctx.fillStyle = '#F0E7DA';
+        this.ctx.fillText(this.month1, dx + width / 2 - month1Metric.width - monthPadding, dy + monthHeightOffset);
+        this.ctx.fillText(this.month2, dx + width / 2 + monthPadding, dy + monthHeightOffset);
+
+        const dateHeight = 140;
+        const dateShiftHeight = dateHeight * 1.25 / 1.5;
+        const dateHeightOffset = width * (ringHeight + monthHeight + dateShiftHeight) / 240;
+        const dateFont = width * dateHeight / 240;
+        this.ctx.font = dateFont + 'px Helvetica';
+        const date1Metric = this.ctx.measureText(this.date1);
+        const datePadding = 2;
+        this.ctx.fillStyle = '#6D1919';
+        this.ctx.fillText(this.date1, dx + width / 2 - date1Metric.width - datePadding, dy + dateHeightOffset);
+        this.ctx.fillText(this.date2, dx + width / 2 + datePadding, dy + dateHeightOffset);
     }
 }
 
