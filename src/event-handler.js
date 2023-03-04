@@ -43,6 +43,8 @@ function hitOrnament(value, i) {
 
     const bg = new ObjectBackground();
     bg.setShowCharacter(achievement.hits.ornament.map((h) => h % 2 == 1));
+    achievement.checkCalendarSet();
+    bg.setCalendar(achievement.isCalendarSet);
     bg.draw(achievement.level);
 
     if (achievement.checkLevelUp()) {

@@ -23,6 +23,9 @@ class Achievement {
                 }
             }
 
+            // isSet flags for 4 digits on background calendar date
+            this.isCalendarSet = [false, false, false, false];
+
             instance = this;
         }
         return instance;
@@ -47,6 +50,31 @@ class Achievement {
         }
 
         return false;
+    }
+
+    // check ornaments hits to see calendar's date is correctly set
+    checkCalendarSet() {
+        // consider ornaments hits to be 4 bit values,
+        // order is from least significant bit to most significant bit,
+        // i.e. ornament[0] is first bit
+        //
+        // check 0001, 0010 twice, 0101 (1225)
+
+        const sum = this.hits.ornament.reduce((accum, h, idx) => accum + h % 2 * Math.pow(2, idx), 0);
+        switch (sum) {
+            case 1:
+                this.isCalendarSet[0] = true;
+                break;
+            case 2:
+                if (this.isCalendarSet[1]) {
+                    this.isCalendarSet[2] = true;
+                } else {
+                    this.isCalendarSet[1] = true;
+                }
+                break;
+            case 5:
+                this.isCalendarSet[3] = true;
+        }
     }
 }
 

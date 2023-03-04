@@ -62,6 +62,7 @@ class ObjectBackground {
             this.date2 = today.getDate() % 10;
             this.month1 = Math.floor((today.getMonth() + 1) / 10);
             this.month2 = (today.getMonth() + 1) % 10;
+            this.isCalendarSet = [false, false, false, false];
 
             instance = this;
         }
@@ -267,6 +268,24 @@ class ObjectBackground {
         this.drawCalendar();
     }
 
+    // set calendar digits to festival date (12-25)
+    // param: [bool, bool, bool, bool] 
+    // indicates whether 4 digits on calendar, mmdd will be set to festival date or not
+    setCalendar(isCalendarSet) {
+        if (isCalendarSet.length == 4) {
+            this.isCalendarSet = isCalendarSet;
+            if (isCalendarSet[0]) {
+                this.month1 = 1;
+            } else if (isCalendarSet[1]) {
+                this.month2 = 2;
+            } else if (isCalendarSet[2]) {
+                this.date1 = 2;
+            } else if (isCalendarSet[3]) {
+                this.date2 = 5;
+            }
+        }
+    }
+
     drawCalendar() {
         // below right bottom shelf
         const shelfId = 1;
@@ -283,6 +302,7 @@ class ObjectBackground {
 
         // draw month and date digit
         // use dimension based on the calendar image resource
+        const imgW = 240;
         const monthHeight = 80;
         // assume cap height * 1.5 = height,
         // and shift downwards half of descendant,
@@ -290,8 +310,8 @@ class ObjectBackground {
         // i.e. shift height = 1.25 * height / 1.5
         const monthShiftHeight = monthHeight * 1.25 / 1.5;
         const ringHeight = 20;
-        const monthHeightOffset = width * (ringHeight + monthShiftHeight) / 240;
-        const monthFont = width * monthHeight / 240;
+        const monthHeightOffset = width * (ringHeight + monthShiftHeight) / imgW;
+        const monthFont = width * monthHeight / imgW;
         this.ctx.font = monthFont + 'px Helvetica';
         const month1Metric = this.ctx.measureText(this.month1);
         const monthPadding = 2;
@@ -299,16 +319,44 @@ class ObjectBackground {
         this.ctx.fillText(this.month1, dx + width / 2 - month1Metric.width - monthPadding, dy + monthHeightOffset);
         this.ctx.fillText(this.month2, dx + width / 2 + monthPadding, dy + monthHeightOffset);
 
+        // isCalendarSet hint mm
+        const r = 6.5;
+        const hintR = width * r / imgW;
+        let hintHeightOffset = width * (ringHeight + r * 2) / imgW;
+        if (this.isCalendarSet[0]) {
+            this.ctx.beginPath();
+            this.ctx.arc(dx + hintR * 2, dy + hintHeightOffset, hintR, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
+        if (this.isCalendarSet[1]) {
+            this.ctx.beginPath();
+            this.ctx.arc(dx + width - hintR * 2, dy + hintHeightOffset, hintR, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
+
         const dateHeight = 140;
         const dateShiftHeight = dateHeight * 1.25 / 1.5;
-        const dateHeightOffset = width * (ringHeight + monthHeight + dateShiftHeight) / 240;
-        const dateFont = width * dateHeight / 240;
+        const dateHeightOffset = width * (ringHeight + monthHeight + dateShiftHeight) / imgW;
+        const dateFont = width * dateHeight / imgW;
         this.ctx.font = dateFont + 'px Helvetica';
         const date1Metric = this.ctx.measureText(this.date1);
         const datePadding = 2;
         this.ctx.fillStyle = '#6D1919';
         this.ctx.fillText(this.date1, dx + width / 2 - date1Metric.width - datePadding, dy + dateHeightOffset);
         this.ctx.fillText(this.date2, dx + width / 2 + datePadding, dy + dateHeightOffset);
+
+        // isCalendarSet hint dd
+        hintHeightOffset = width * (ringHeight + monthHeight + r * 2) / imgW;
+        if (this.isCalendarSet[2]) {
+            this.ctx.beginPath();
+            this.ctx.arc(dx + hintR * 2, dy + hintHeightOffset, hintR, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
+        if (this.isCalendarSet[3]) {
+            this.ctx.beginPath();
+            this.ctx.arc(dx + width - hintR * 2, dy + hintHeightOffset, hintR, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
     }
 }
 
