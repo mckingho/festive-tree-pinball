@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+    viewBox="0 0 100 100" width="100" height="100">
+    <g id="leaves-back">
+        <path
+            d="M 50.5 1 Q 69 50 99 99 Q 87.775 98.5 76.55 90 L 69.75 99 L 65.9 90 L 63.24 99 L 58.15 90 L 54.67 99 L 46.18 90 Q 39.455 96.8 32.73 99 Q 26.905 96.8 21.08 90 Q 11.04 98.5 1 99 Q 31 50 49.5 1 Z"
+            stroke="#0A2209" fill="#12320f" stroke-width="1" stroke-linejoin="round" />
+    </g>
+    <g id="leaves-fore">
+        <path d="M 50 1.6 Q 64 38 84.4 75 Q 50 77 15.5 75 Q 36 38 50 1.6 Z" fill="#0A4902" />
+    </g>
+</svg>

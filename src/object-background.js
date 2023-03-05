@@ -36,10 +36,10 @@ class ObjectBackground {
             this.boxImgs = [new Image(), new Image(), new Image(), new Image()];
             this.charImgs = [new Image(), new Image(), new Image(), new Image()];
             this.trunkImg.onload = () => {
-                this.leavesImgs[0].src = 'resources/images/leaves/leaves1.png';
-                this.leavesImgs[1].src = 'resources/images/leaves/leaves2.png';
-                this.leavesImgs[2].src = 'resources/images/leaves/leaves3.png';
-                this.leavesImgs[3].src = 'resources/images/leaves/leaves4.png';
+                this.leavesImgs[0].src = 'resources/images/leaves/leaves1.svg';
+                this.leavesImgs[1].src = 'resources/images/leaves/leaves2.svg';
+                this.leavesImgs[2].src = 'resources/images/leaves/leaves3.svg';
+                this.leavesImgs[3].src = 'resources/images/leaves/leaves4.svg';
 
                 // map index to id mod 4
                 this.boxImgs[0].src = 'resources/images/giftbox4.png';
