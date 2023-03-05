@@ -1,6 +1,6 @@
 import { getConfig } from './settings.js'
 import { faucetGeometry, leverDimension, ornamentRadius, leavesGeometry, starGeometry } from '../dimension.js';
-import { hitOrnament, turnFaucet } from '../event-handler.js';
+import { hitOrnament, turnFaucet, addScore } from '../event-handler.js';
 
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
