@@ -276,11 +276,14 @@ class ObjectBackground {
             this.isCalendarSet = isCalendarSet;
             if (isCalendarSet[0]) {
                 this.month1 = 1;
-            } else if (isCalendarSet[1]) {
+            }
+            if (isCalendarSet[1]) {
                 this.month2 = 2;
-            } else if (isCalendarSet[2]) {
+            }
+            if (isCalendarSet[2]) {
                 this.date1 = 2;
-            } else if (isCalendarSet[3]) {
+            }
+            if (isCalendarSet[3]) {
                 this.date2 = 5;
             }
         }
