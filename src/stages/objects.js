@@ -152,6 +152,7 @@ class StageObjects {
             bodyB: star,
             pointB: { x: 0, y: 0 },
             render: {
+                strokeStyle: "#FFFD74",
                 anchors: false,
             },
         });
