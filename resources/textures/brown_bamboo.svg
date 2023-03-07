@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+    viewBox="0 0 100 100" width="240" height="240">
+    <g id="joint">
+        <rect width="100" height="10" rx="5" fill="#492620" />
+    </g>
+    <g id="trunk">
+        <path d="M 8 10 L 84 10 Q 80 55 84 100 L 8 100 Q 12 55 8 10 Z" fill="#59321D" />
+        <path d="M 84 10 L 92 10 Q 88 55 92 100 L 84 100 Q 80 55 84 10 Z" fill="#8F6849" />
+    </g>
+</svg>
