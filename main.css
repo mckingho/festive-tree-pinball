@@ -1,0 +1,43 @@
+* {
+    font-family: Helvetica, Arial, sans-serif
+}
+
+#board-container {
+    margin: auto;
+}
+
+#board-background {
+    z-index: -1;
+    position: relative;
+}
+
+#board-foreground {
+    z-index: 1;
+    position: absolute;
+}
+
+#controller {
+    margin: auto;
+    display: flex;
+}
+
+.controller-btn {
+    flex: 1;
+    height: 100%;
+    border-radius: .5em;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    color: #CFD4D9;
+}
+
+#btn-left {
+    float: left;
+    border: solid 1px #028A0F;
+    background: linear-gradient(#03AC13, #028A0F)
+}
+
+#btn-right {
+    float: right;
+    border: solid 1px #990F02;
+    background: linear-gradient(#D21404, #990F02)
+}
