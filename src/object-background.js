@@ -17,6 +17,13 @@ class ObjectBackground {
             this.frameImg = new Image();
             this.frameImg.src = 'resources/textures/brown_bamboo.svg';
 
+            this.decorLeaf1Img = new Image();
+            this.decorLeaf1Img.src = 'resources/images/leaves/decor_leaf1.svg';
+            this.decorLeaf2Img = new Image();
+            this.decorLeaf2Img.src = 'resources/images/leaves/decor_leaf2.svg';
+            this.decorLeaf3Img = new Image();
+            this.decorLeaf3Img.src = 'resources/images/leaves/decor_leaf3.svg';
+
             this.potImg = new Image();
             this.potImg.src = 'resources/images/pot.png';
 
@@ -89,6 +96,10 @@ class ObjectBackground {
 
         this.drawLoadedFrame();
 
+        this.drawLoadedDecorLeaf1();
+        this.drawLoadedDecorLeaf2();
+        this.drawLoadedDecorLeaf3();
+
         // get stage render config
         const stageConfig = getConfig(stage);
 
@@ -154,7 +165,7 @@ class ObjectBackground {
             }
         }
         this.createFramePattern();
-        this.drawFrame()
+        this.drawFrame();
     }
 
     createFramePattern() {
@@ -186,13 +197,69 @@ class ObjectBackground {
         }
     }
 
+    drawLoadedDecorLeaf1() {
+        if (!this.isInitDrawn) {
+            this.decorLeaf1Img.onload = () => {
+                this.drawDecorLeaf1();
+            }
+        }
+        this.drawDecorLeaf1();
+    }
+
+    drawDecorLeaf1() {
+        const frW = frameThickness(this.canvas.width);
+        const dx = frW / 2;
+        const dy = this.canvas.height - this.canvas.height / 8;
+        const side = frW * 2;
+        this.ctx.drawImage(this.decorLeaf1Img, dx, dy, side, side);
+    }
+
+    drawLoadedDecorLeaf2() {
+        if (!this.isInitDrawn) {
+            this.decorLeaf2Img.onload = () => {
+                this.drawDecorLeaf2();
+            }
+        }
+        this.drawDecorLeaf2();
+    }
+
+    drawDecorLeaf2() {
+        const frW = frameThickness(this.canvas.width);
+        const dx = frW / 2;
+        const dy = this.canvas.height / 4;
+        const side = frW * 3;
+        this.ctx.drawImage(this.decorLeaf2Img, dx, dy, side, side);
+    }
+
+    drawLoadedDecorLeaf3() {
+        if (!this.isInitDrawn) {
+            this.decorLeaf3Img.onload = () => {
+                this.drawDecorLeaf3();
+            }
+        }
+        this.drawDecorLeaf3();
+    }
+
+    drawDecorLeaf3() {
+        const frW = frameThickness(this.canvas.width);
+        const width = frW * 3;
+        const height = width / 2;
+        const dx = this.canvas.width - frW;
+        const dy = this.canvas.height / 2 - this.canvas.height / 8;
+        this.ctx.translate(dx, dy);
+        this.ctx.rotate(Math.PI / 2);
+        this.ctx.drawImage(this.decorLeaf3Img, 0, 0, width, height);
+        this.ctx.rotate(-Math.PI / 2);
+        this.ctx.translate(-dx, -dy);
+    }
+
     drawLoadedPot() {
         if (!this.isInitDrawn) {
             this.potImg.onload = () => {
                 this.drawPot();
             }
         }
-        this.drawPot()
+        this.drawPot();
     }
 
     drawPot() {
@@ -211,7 +278,7 @@ class ObjectBackground {
             }
         }
         if (config.seed) {
-            this.drawSeed()
+            this.drawSeed();
         }
     }
 
@@ -232,7 +299,7 @@ class ObjectBackground {
             }
         }
         if (config.faucet) {
-            this.drawFaucet()
+            this.drawFaucet();
         }
     }
 
