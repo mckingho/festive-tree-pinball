@@ -353,6 +353,8 @@ class MatterObject {
     // reset ball position to init position
     resetBall() {
         Body.set(this.ball, 'position', { x: this.ballDx, y: this.ballDy });
+        Body.set(this.ball, 'speed', 0);
+        Body.setVelocity(this.ball, { x: 0, y: 0 });
     }
 }
 
