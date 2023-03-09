@@ -55,6 +55,10 @@ function resizeBoard() {
     controlPanel.style.width = boardWidth + 'px';
     controlPanel.style.height = controllerHeight + 'px';
 
+    // screen panel position
+    const screenPanel = document.getElementById('screen-panel');
+    screenPanel.style.width = boardWidth + 'px';
+
     // rebuild
     object.buildEngine();
     objectBg.draw();
