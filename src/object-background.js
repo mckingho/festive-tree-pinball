@@ -1,4 +1,4 @@
-import { potGeometry, seedDimension, faucetGeometry, trunkDimension, leavesGeometry, giftGeometry } from './dimension.js';
+import { frameThickness, potGeometry, seedDimension, faucetGeometry, trunkDimension, leavesGeometry, giftGeometry } from './dimension.js';
 import { getConfig } from './stages/settings.js'
 
 let instance;
@@ -13,6 +13,9 @@ class ObjectBackground {
             this.potY = 0; // pot y position. set when pot is drawn
             this.seedYOffset = 60; // seed y position offset upwards. used for starting animation
             this.isShowCharacters = [false, false, false, false];
+
+            this.frameImg = new Image();
+            this.frameImg.src = 'resources/textures/brown_bamboo.svg';
 
             this.potImg = new Image();
             this.potImg.src = 'resources/images/pot.png';
@@ -84,6 +87,8 @@ class ObjectBackground {
 
         this.drawWall();
 
+        this.drawLoadedFrame();
+
         // get stage render config
         const stageConfig = getConfig(stage);
 
@@ -138,6 +143,46 @@ class ObjectBackground {
         for (let i = 0; i < cols; i += 1) {
             this.ctx.fillStyle = this.wallGradients[i % 2];
             this.ctx.fillRect(colW * i, 0, colW, h);
+        }
+    }
+
+    drawLoadedFrame() {
+        if (!this.isInitDrawn) {
+            this.frameImg.onload = () => {
+                this.createFramePattern();
+                this.drawFrame();
+            }
+        }
+        this.createFramePattern();
+        this.drawFrame()
+    }
+
+    createFramePattern() {
+        if (this.frameImg.complete && !this.framePattern) {
+            const frW = frameThickness(this.canvas.width);
+            const segmentH = frW * 3;
+            const frameCanvas = document.createElement("CANVAS");
+            frameCanvas.width = frW;
+            frameCanvas.height = segmentH;
+            frameCanvas.getContext('2d').drawImage(this.frameImg, 0, 0, frW, segmentH);
+            this.framePattern = this.ctx.createPattern(frameCanvas, 'repeat-y');
+        }
+    }
+
+    // draw frames on both sides
+    drawFrame() {
+        if (this.framePattern) {
+            const frW = frameThickness(this.canvas.width);
+            const frOffsetH = this.canvas.height / 4 - frW;
+            const frH = this.canvas.height - frOffsetH;
+            this.ctx.fillStyle = this.framePattern;
+            // translate ctx so that pattern starts at 0,0 when filling
+            this.ctx.translate(0, frOffsetH);
+            this.ctx.fillRect(0, 0, frW, frH); // left
+            const dx2 = this.canvas.width - frW;
+            this.ctx.translate(dx2, 0);
+            this.ctx.fillRect(0, 0, frW, frH); // right
+            this.ctx.translate(-dx2, -frOffsetH);
         }
     }
 
