@@ -76,7 +76,6 @@
 .screen-achievement-td {
     flex: 33%;
     aspect-ratio: 1/1;
-    font-size: 8vh;
 }
 
 .screen-achievement-td-el {
@@ -85,10 +84,21 @@
     aspect-ratio: 1/1;
 }
 
+.ach-badge {
+    font-size: 8vh;
+}
+
+.ach-text {
+    font-size: 12px;
+    padding-top: 12px;
+}
+
 .greyscale {
     filter: grayscale(1);
 }
 
-#screen-score-val {
+#score-val {
     font-size: 4vh;
+    /*align to top element margin or padding*/
+    padding-bottom: 16px;
 }
