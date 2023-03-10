@@ -45,6 +45,15 @@ function updateScreenPanel() {
         badgeEl.innerHTML = isHidden ? Ach.hidden.badge : Ach.badges[key];
         const textEl = document.getElementById('ach-' + key + '-text');
         textEl.innerHTML = isHidden ? Ach.hidden.text : Ach.texts[key];
+
+        const el = document.getElementById('ach-' + key);
+        if (success) {
+            el.classList.add('ach-success');
+            el.classList.remove('ach-locked');
+        } else {
+            el.classList.remove('ach-success');
+            el.classList.add('ach-locked');
+        }
     }
     const score = new Score();
     const scoreEl = document.getElementById('score-val');
