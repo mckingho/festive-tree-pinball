@@ -76,6 +76,54 @@ class Achievement {
                 this.isCalendarSet[3] = true;
         }
     }
+
+    //
+    // checking for badge achievement
+    //
+
+    isBadgeFaucet() {
+        // check faucet is hit at least once
+        return this.hits.faucet > 0;
+    }
+
+    isBadgeTree() {
+        // check current level reaches maximum leaves level
+        return this.level >= this.leavesMaxLevel;
+    }
+
+    isBadgeBear() {
+        return this.hits.ornament[1] > 0;
+    }
+
+    isBadgeGingerbread() {
+        return this.hits.ornament[2] > 0;
+    }
+
+    isBadgeReindeer() {
+        return this.hits.ornament[3] > 0;
+    }
+
+    isBadgeSnowman() {
+        return this.hits.ornament[0] > 0;
+    }
+
+    isBadgeStar() {
+        // check current level is after maximum leaves level
+        // i.e. star level
+        return this.level > this.leavesMaxLevel;
+    }
+
+    isBadge100() {
+        // check sum of ornaments hit reaches 100
+        const sum = this.hits.ornament.reduce((s, hit) => s + hit, 0);
+        return sum >= 100;
+    }
+
+    isBadgeCalendar() {
+        // check for 4 digit is set
+        const isAllSet = this.isCalendarSet.reduce((s, isSet) => s && isSet, true);
+        return isAllSet;
+    }
 }
 
 export default Achievement;

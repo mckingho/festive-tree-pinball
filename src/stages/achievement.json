@@ -1,0 +1,50 @@
+{
+    "index": [
+        "faucet",
+        "tree",
+        "bear",
+        "gingerbread",
+        "reindeer",
+        "snowman",
+        "star",
+        "100",
+        "calendar"
+    ],
+    "badges": {
+        "faucet": "💦",
+        "tree": "🎄",
+        "bear": "🧸",
+        "gingerbread": "🍪",
+        "reindeer": "🦌",
+        "snowman": "⛄",
+        "star": "⭐",
+        "100": "💯",
+        "calendar": "📅"
+    },
+    "texts": {
+        "faucet": "Hit faucet",
+        "tree": "Grow tree",
+        "bear": "Summon bear",
+        "gingerbread": "Summon gingerbread",
+        "reindeer": "Summon reindeer",
+        "snowman": "Summon snowman",
+        "star": "Summon star",
+        "100": "Hit 100 times",
+        "calendar": "Set festival date"
+    },
+    "requireHidden": {
+        "faucet": false,
+        "tree": true,
+        "bear": true,
+        "gingerbread": true,
+        "reindeer": true,
+        "snowman": true,
+        "star": false,
+        "100": false,
+        "calendar": true
+    },
+    "hidden": {
+        "badge": "❓",
+        "text": "[hidden]"
+    }
+}

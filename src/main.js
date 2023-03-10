@@ -4,6 +4,7 @@ import ObjectBackground from './object-background.js';
 import { handleKeyDown, handleClick } from './controller.js';
 import Foreground from './foreground.js';
 import env from './env.json' assert { type: "json" };
+import { updateScreenPanel } from './screen.js';
 
 // max full board size
 let boardWidth = 0;
@@ -58,6 +59,9 @@ function resizeBoard() {
     // screen panel position
     const screenPanel = document.getElementById('screen-panel');
     screenPanel.style.width = boardWidth + 'px';
+
+    // update screen panel
+    updateScreenPanel();
 
     // rebuild
     object.buildEngine();
