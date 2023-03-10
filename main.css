@@ -93,8 +93,12 @@
     padding-top: 12px;
 }
 
-.greyscale {
+.ach-locked {
     filter: grayscale(1);
+}
+
+.ach-success {
+    background: rgba(22, 120, 0, .3);
 }
 
 #score-val {
