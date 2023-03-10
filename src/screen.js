@@ -5,8 +5,12 @@ import Ach from './stages/achievement.json' assert { type: "json" };
 import Achievement from './stages/achievement.js';
 import Score from './score.js';
 
+let hideListenerFn;
+
 // update screen panel's achievement and score
 function updateScreenPanel() {
+    registerHideListener(); // init
+
     const achievement = new Achievement();
     for (const key of Ach.index) {
         let success = false;
@@ -60,6 +64,32 @@ function updateScreenPanel() {
     scoreEl.innerHTML = score.val();
 }
 
+function hideScreen() {
+    const el = document.getElementById('screen');
+    el.style.display = 'none';
+}
+
+function showScreen() {
+    const el = document.getElementById('screen');
+    el.style.display = 'block';
+    // focus with tabindex attribute element, for handling key board event
+    el.focus();
+}
+
+// function to register event listener to hide screen,
+// should be called on init
+function registerHideListener() {
+    if (!hideListenerFn) {
+        const el = document.getElementById('screen');
+        hideListenerFn = () => { hideScreen() };
+        el.addEventListener('click', hideListenerFn);
+        el.addEventListener('keydown', hideListenerFn);
+    }
+}
+
 export {
     updateScreenPanel,
+    hideScreen,
+    showScreen,
+    registerHideListener,
 }
