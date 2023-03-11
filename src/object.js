@@ -58,6 +58,7 @@ class MatterObject {
 
             // start state
             this.started = false;
+            this.checkBallIntervalId = null;
 
             instance = this;
         }
@@ -363,7 +364,6 @@ class MatterObject {
 
     // start by unsetting ball to not static 
     start() {
-        console.log('start');
         Body.setStatic(this.ball, false);
         this.started = true;
         this.setCheckBallInterval();
@@ -371,32 +371,30 @@ class MatterObject {
 
     // stop by setting ball to static 
     stop() {
-        console.log('stop');
         Body.setStatic(this.ball, true);
         this.started = false;
+        if (this.checkBallIntervalId != null) {
+            clearInterval(this.checkBallIntervalId);
+            this.checkBallIntervalId = null;
+        }
     }
 
     // check ball position, speed or other state and call handler
     setCheckBallInterval() {
-        if (this.ball && this.started) {
-            console.log('ball pos');
-            console.log(this.ball.position.x);
-            console.log(this.ball.position.y);
-
-            if (this.ball.position.y > this.render.options.height) {
-                // emit stop game event
-                window.dispatchEvent(new Event('customStop'));
-            } else if (this.ball.position.x < 0 ||
-                this.ball.position.x > this.render.options.width ||
-                this.ball.position.y < 0) {
-                // ball may penetrate through top or sides,
-                // current feature: hard set the ball to starting position
-                this.resetBall();
-            }
-
-            // schedule next check
-            setTimeout(() => {
-                instance.setCheckBallInterval();
+        if (this.checkBallIntervalId == null) {
+            this.checkBallIntervalId = setInterval(() => {
+                if (instance.ball && instance.started) {
+                    if (instance.ball.position.y > instance.render.options.height) {
+                        // emit stop game event
+                        window.dispatchEvent(new Event('customStop'));
+                    } else if (instance.ball.position.x < 0 ||
+                        instance.ball.position.x > instance.render.options.width ||
+                        instance.ball.position.y < 0) {
+                        // ball may penetrate through top or sides,
+                        // feature: hard set the ball to starting position
+                        instance.resetBall();
+                    }
+                }
             }, 1000);
         }
     }
