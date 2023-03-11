@@ -81,7 +81,12 @@ function showScreen() {
 function registerHideListener() {
     if (!hideListenerFn) {
         const el = document.getElementById('screen');
-        hideListenerFn = () => { hideScreen() };
+        hideListenerFn = () => {
+            hideScreen();
+
+            // closing screen will emit start game event
+            window.dispatchEvent(new Event('customStart'));
+        };
         el.addEventListener('click', hideListenerFn);
         el.addEventListener('keydown', hideListenerFn);
     }

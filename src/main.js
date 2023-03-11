@@ -89,5 +89,22 @@ function resizeBoard() {
     window.addEventListener("keypress", resetBallFn);
 }
 
+function startGame() {
+    if (object) {
+        object.start();
+    }
+}
+
+function stopGame() {
+    if (object) {
+        object.stop();
+        updateScreenPanel();
+        showScreen();
+    }
+}
+
 window.addEventListener('load', resizeBoard);
 window.addEventListener("resize", resizeBoard);
+// Custom event handling
+window.addEventListener('customStart', startGame);
+window.addEventListener('customStop', stopGame);

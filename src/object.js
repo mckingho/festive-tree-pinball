@@ -56,6 +56,9 @@ class MatterObject {
 
             this.initEventHandler();
 
+            // start state
+            this.started = false;
+
             instance = this;
         }
 
@@ -193,7 +196,8 @@ class MatterObject {
                 fillStyle: '#ECECEC',
                 strokeStyle: '#D7D7D7',
                 lineWidth: 1,
-            }
+            },
+            isStatic: true,
         });
         this.ballId = ball.id;
         this.ball = ball;
@@ -355,6 +359,46 @@ class MatterObject {
         Body.set(this.ball, 'position', { x: this.ballDx, y: this.ballDy });
         Body.set(this.ball, 'speed', 0);
         Body.setVelocity(this.ball, { x: 0, y: 0 });
+    }
+
+    // start by unsetting ball to not static 
+    start() {
+        console.log('start');
+        Body.setStatic(this.ball, false);
+        this.started = true;
+        this.setCheckBallInterval();
+    }
+
+    // stop by setting ball to static 
+    stop() {
+        console.log('stop');
+        Body.setStatic(this.ball, true);
+        this.started = false;
+    }
+
+    // check ball position, speed or other state and call handler
+    setCheckBallInterval() {
+        if (this.ball && this.started) {
+            console.log('ball pos');
+            console.log(this.ball.position.x);
+            console.log(this.ball.position.y);
+
+            if (this.ball.position.y > this.render.options.height) {
+                // emit stop game event
+                window.dispatchEvent(new Event('customStop'));
+            } else if (this.ball.position.x < 0 ||
+                this.ball.position.x > this.render.options.width ||
+                this.ball.position.y < 0) {
+                // ball may penetrate through top or sides,
+                // current feature: hard set the ball to starting position
+                this.resetBall();
+            }
+
+            // schedule next check
+            setTimeout(() => {
+                instance.setCheckBallInterval();
+            }, 1000);
+        }
     }
 }
 
