@@ -24,7 +24,8 @@ let barRightClickFn;
 let resetBallFn;
 
 function adjustSize() {
-    ({ boardWidth, boardHeight } = maxBoardDimension(window.innerWidth, window.innerHeight));
+    const bodyMargin = 8;
+    ({ boardWidth, boardHeight } = maxBoardDimension(window.innerWidth, window.innerHeight - bodyMargin));
     // adjust board height for controller
     ({ boardHeight, controllerHeight } = boardControllerHeight(boardHeight));
 
