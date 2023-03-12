@@ -219,9 +219,9 @@ class MatterObject {
         const ball = Bodies.circle(ballDx, ballDy, r, {
             restitution: 1,
             render: {
-                fillStyle: '#ECECEC',
-                strokeStyle: '#D7D7D7',
-                lineWidth: 1,
+                fillStyle: '#CFDAD9',
+                strokeStyle: '#161D15',
+                lineWidth: 2,
             },
             isStatic: true,
         });

@@ -141,10 +141,10 @@ class ObjectBackground {
         const h = this.canvas.height;
 
         if (!this.wallGradients) {
-            this.wallGradients = [0.75, 0.8].map((alpha) => {
+            this.wallGradients = [0.9, 0.95].map((alpha) => {
                 const grd = this.ctx.createLinearGradient(0, 0, 0, h);
-                grd.addColorStop(0, 'rgba(76, 84, 69, 1)');
-                grd.addColorStop(1, 'rgba(76, 84, 69, ' + alpha + ')');
+                grd.addColorStop(0, 'rgba(74, 112, 86, 1)');
+                grd.addColorStop(1, 'rgba(74, 112, 86, ' + alpha + ')');
                 return grd;
             });
         }
