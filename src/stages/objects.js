@@ -104,7 +104,10 @@ class StageObjects {
             strokeStyle: strokeStyles[leavesLevel],
             lineWidth: 1,
         };
-        const ornament = Bodies.polygon(dx, dy, 4, r, { render });
+        const ornament = Bodies.polygon(dx, dy, 4, r, {
+            restitution: 0.5,
+            render,
+        });
         ornament.onCollisionStartCustomCb = () => {
             const stageConfig = getConfig(this.stage);
             hitOrnament(stageConfig.ornamentScore, leavesLevel);
@@ -121,7 +124,7 @@ class StageObjects {
             },
         };
         // varying constraints
-        if (leavesLevel % 2 == 1) {
+        if (leavesLevel % 2 == 0) {
             constraintData.stiffness = 0.01;
             constraintData.damping = 0.01 * leavesLevel;
         }
