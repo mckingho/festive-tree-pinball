@@ -120,7 +120,9 @@ function trunkDimension(potWidth) {
 // returns: {dx, dy, height, width}
 function leavesGeometry(width, height, i) {
     const leavesHeight = height * (1 / 9 + 1 / 12);
-    const leavesWidth = leavesHeight;
+    const xMuls = [0.4, 0.2, 0.1, 0];
+    const addWidth = xMuls[i] * width / 4; // wider for lower leaves
+    const leavesWidth = leavesHeight + addWidth;
     const dx = width / 2 - leavesWidth / 2;
     // growth = trunk + self height + previous levels' leaves
     const { width: potWidth } = potGeometry(width, height);
@@ -144,7 +146,7 @@ function giftGeometry(width, height, id) {
     const side = shelfWidth / 2;
     const pad = 2;
     const pos = id % 4;
-    const xMuls = [1, 1, -1, -1];
+    const xMuls = [1, 1.2, -1.2, -1];
     const centerDx = width / 2 + xMuls[pos] * width / 4;
     const dx = centerDx - side / 2;
     const yMuls = [-2, 0, 1, -1];
