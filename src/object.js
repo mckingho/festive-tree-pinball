@@ -62,6 +62,12 @@ class MatterObject {
             this.checkBallIntervalId = null;
 
             // render resources
+            this.topImg = new Image();
+            this.topImg.src = 'resources/textures/xmas_top_pattern.svg';
+            this.topImg.onload = () => {
+                this.createTopPattern();
+                this.updateTopStyle();
+            }
             this.baseLImg = new Image();
             this.baseLImg.src = 'resources/textures/xmas_hat_pattern_green.svg';
             this.baseLImg.onload = () => {
@@ -194,7 +200,11 @@ class MatterObject {
         let hatPartF = Bodies.rectangle(hatPartFX + frT / 2, hatPartFY - hatPartFLength / 2, frT, hatPartFLength, { isStatic: true, render: hatFrameRender });
         Body.rotate(hatPartF, hatPartFRadian, { x: hatPartF.position.x - frT / 2, y: hatPartF.position.y + hatPartFLength / 2 });
 
+        this.tops = [hatPartA, hatPartB, hatPartC, hatPartD, hatPartE, hatPartF];
         els.push(hatPartA, hatPartB, hatPartC, hatPartD, hatPartE, hatPartF);
+        // top pattern
+        this.createTopPattern();
+        this.updateTopStyle();
 
         // ball
         const r = ballRadius(w);
@@ -330,6 +340,28 @@ class MatterObject {
 
         this.updateStageObjects();
 
+    }
+
+    // create top object style pattern
+    createTopPattern() {
+        if (this.topImg.complete && !this.topPattern) {
+            const w = 24;
+            const h = 24;
+            const topCanvas = document.createElement("CANVAS");
+            topCanvas.width = w;
+            topCanvas.height = h;
+            topCanvas.getContext('2d').drawImage(this.topImg, 0, 0, w, h);
+            this.topPattern = this.render.context.createPattern(topCanvas, 'repeat');
+        }
+    }
+
+    // update top object style
+    updateTopStyle() {
+        if (this.topPattern) {
+            for (const element of this.tops) {
+                element.render.fillStyle = this.topPattern;
+            }
+        }
     }
 
     // create baseL object style pattern
