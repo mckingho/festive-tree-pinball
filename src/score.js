@@ -17,6 +17,11 @@ class Score {
     add(value) {
         this.value += value;
     }
+
+    // cleanup
+    clear() {
+        instance = null;
+    }
 }
 
 export default Score;

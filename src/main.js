@@ -5,6 +5,8 @@ import { handleKeyDown, handleClick } from './controller.js';
 import Foreground from './foreground.js';
 import env from './env.json' assert { type: "json" };
 import { showScreen, updateScreenPanel } from './screen.js';
+import Achievement from './stages/achievement.js';
+import Score from './score.js';
 
 // max full board size
 let boardWidth = 0;
@@ -21,14 +23,34 @@ let barLeftClickFn;
 let barRightClickFn;
 let resetBallFn;
 
-function resizeBoard() {
+function adjustSize() {
     ({ boardWidth, boardHeight } = maxBoardDimension(window.innerWidth, window.innerHeight));
     // adjust board height for controller
     ({ boardHeight, controllerHeight } = boardControllerHeight(boardHeight));
 
+    // adjust board position
+    const boardContainer = document.getElementById('board-container');
+    boardContainer.style.width = boardWidth + 'px';
+    const board = document.getElementById('board');
+    const marginTopOffset = boardHeight + MATTER_MARGIN / 2;
+    board.style.marginTop = '-' + marginTopOffset + 'px';
+    const fgDiv = document.getElementById('board-foreground');
+    fgDiv.style.marginTop = '-' + marginTopOffset + 'px';
+
+    // controller position
+    const controlPanel = document.getElementById('controller');
+    controlPanel.style.width = boardWidth + 'px';
+    controlPanel.style.height = controllerHeight + 'px';
+
+    // screen panel position
+    const screenPanel = document.getElementById('screen-panel');
+    screenPanel.style.width = boardWidth + 'px';
+}
+
+function initMatterObject() {
     // init object / resize object's render
     if (!object) {
-        let board = document.querySelector('#board');
+        const board = document.querySelector('#board');
         object = new MatterObject(board, boardWidth, boardHeight);
     } else {
         object.resizeRender(boardWidth, boardHeight);
@@ -41,41 +63,21 @@ function resizeBoard() {
         fg = new Foreground();
     }
     fg.resizeRender(boardWidth, boardHeight);
+}
 
-    // adjust board position
-    let boardContainer = document.getElementById('board-container');
-    boardContainer.style.width = boardWidth + 'px';
-    let board = document.getElementById('board');
-    let marginTopOffset = boardHeight + MATTER_MARGIN / 2;
-    board.style.marginTop = '-' + marginTopOffset + 'px';
-    let fgDiv = document.getElementById('board-foreground');
-    fgDiv.style.marginTop = '-' + marginTopOffset + 'px';
-
-    // controller position
-    let controlPanel = document.getElementById('controller');
-    controlPanel.style.width = boardWidth + 'px';
-    controlPanel.style.height = controllerHeight + 'px';
-
-    // screen panel position
-    const screenPanel = document.getElementById('screen-panel');
-    screenPanel.style.width = boardWidth + 'px';
-
-    // update screen panel
-    updateScreenPanel();
-    showScreen();
-
+function buildMatterObject() {
     // rebuild
     object.buildEngine();
     objectBg.draw();
     fg.draw();
 
     // reset event of controller object
-    let { left: barL, right: barR } = object.getControlBars();
+    const { left: barL, right: barR } = object.getControlBars();
     window.removeEventListener('keydown', barKeyDownFn);
     barKeyDownFn = (event) => { handleKeyDown(event, barL, barR) };
     window.addEventListener("keydown", barKeyDownFn);
-    let controllerLeft = document.getElementById('btn-left');
-    let controllerRight = document.getElementById('btn-right');
+    const controllerLeft = document.getElementById('btn-left');
+    const controllerRight = document.getElementById('btn-right');
     controllerLeft.removeEventListener('click', barLeftClickFn);
     controllerRight.removeEventListener('click', barRightClickFn);
     barLeftClickFn = () => { handleClick(true, false, barL, barR) };
@@ -89,6 +91,19 @@ function resizeBoard() {
     window.addEventListener("keypress", resetBallFn);
 }
 
+function onLoad() {
+    adjustSize();
+    updateScreenPanel();
+    showScreen();
+    initMatterObject();
+    buildMatterObject();
+}
+
+function onResize() {
+    adjustSize();
+    stopGame();
+}
+
 function startGame() {
     if (object) {
         object.start();
@@ -100,11 +115,37 @@ function stopGame() {
         object.stop();
         updateScreenPanel();
         showScreen();
+        clear();
+    }
+
+    // init for next game
+    initMatterObject();
+    buildMatterObject();
+}
+
+function clear() {
+    if (object) {
+        object.clear();
+        object = null;
+
+        // clear in case of initiated
+        const achievement = new Achievement();
+        const score = new Score();
+        achievement.clear();
+        score.clear();
+    }
+    if (objectBg) {
+        objectBg.clear();
+        objectBg = null;
+    }
+    if (fg) {
+        fg.clear();
+        fg = null;
     }
 }
 
-window.addEventListener('load', resizeBoard);
-window.addEventListener("resize", resizeBoard);
+window.addEventListener('load', onLoad);
+window.addEventListener("resize", onResize);
 // Custom event handling
 window.addEventListener('customStart', startGame);
 window.addEventListener('customStop', stopGame);

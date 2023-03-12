@@ -124,6 +124,11 @@ class Achievement {
         const isAllSet = this.isCalendarSet.reduce((s, isSet) => s && isSet, true);
         return isAllSet;
     }
+
+    // cleanup
+    clear() {
+        instance = null;
+    }
 }
 
 export default Achievement;

@@ -159,6 +159,11 @@ class StageObjects {
 
         return [star, constraint];
     }
+
+    // cleanup
+    clear() {
+        instance = null;
+    }
 }
 
 export default StageObjects;

@@ -473,6 +473,11 @@ class ObjectBackground {
             this.ctx.fill();
         }
     }
+
+    // cleanup
+    clear() {
+        instance = null;
+    }
 }
 
 export default ObjectBackground;

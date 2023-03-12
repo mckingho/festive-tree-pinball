@@ -12,6 +12,7 @@ let Engine = Matter.Engine;
 const Events = Matter.Events;
 let Render = Matter.Render;
 let Runner = Matter.Runner;
+const World = Matter.World;
 
 let instance;
 
@@ -397,6 +398,23 @@ class MatterObject {
                 }
             }, 1000);
         }
+    }
+
+    // cleanup 
+    clear() {
+        // clear stages objects also
+        this.stageObjects.clear();
+
+        Render.stop(this.render);
+        World.clear(this.engine.world);
+        Engine.clear(this.engine);
+
+        this.render.canvas.remove();
+        this.render.canvas = null;
+        this.render.context = null;
+        this.render.textures = {};
+
+        instance = null;
     }
 }
 

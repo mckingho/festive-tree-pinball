@@ -218,6 +218,11 @@ class Foreground {
             this.waters = [];
         }
     }
+
+    // cleanup
+    clear() {
+        instance = null;
+    }
 }
 
 export default Foreground;
