@@ -61,6 +61,20 @@ class MatterObject {
             this.started = false;
             this.checkBallIntervalId = null;
 
+            // render resources
+            this.baseLImg = new Image();
+            this.baseLImg.src = 'resources/textures/xmas_hat_pattern_green.svg';
+            this.baseLImg.onload = () => {
+                this.createBaseLPattern();
+                this.updateBaseLStyle();
+            }
+            this.baseRImg = new Image();
+            this.baseRImg.src = 'resources/textures/xmas_hat_pattern_red.svg';
+            this.baseRImg.onload = () => {
+                this.createBaseRPattern();
+                this.updateBaseRStyle();
+            }
+
             instance = this;
         }
 
@@ -226,14 +240,21 @@ class MatterObject {
             { x: frT + baseSide, y: baseY + baseSide },
         ];
         let comL = regularCenterOfMass(vertices);
-        els.push(Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true, render: baseRenderL }));
+        this.baseL = Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true, render: baseRenderL });
+        els.push(this.baseL);
         let vertices2 = [
             { x: w - frT, y: baseY },
             { x: w - frT, y: baseY + baseSide },
             { x: w - frT - baseSide, y: baseY + baseSide },
         ];
         let comR = regularCenterOfMass(vertices2);
-        els.push(Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true, render: baseRenderR }));
+        this.baseR = Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true, render: baseRenderR });
+        els.push(this.baseR);
+        // base pattern
+        this.createBaseLPattern();
+        this.updateBaseLStyle();
+        this.createBaseRPattern();
+        this.updateBaseRStyle();
 
         // bars
         let barRenderL = {
@@ -308,6 +329,47 @@ class MatterObject {
         Composite.add(this.engine.world, els);
 
         this.updateStageObjects();
+
+    }
+
+    // create baseL object style pattern
+    createBaseLPattern() {
+        if (this.baseLImg.complete && !this.baseLPattern) {
+            const w = 50;
+            const h = 50;
+            const baseLCanvas = document.createElement("CANVAS");
+            baseLCanvas.width = w;
+            baseLCanvas.height = h;
+            baseLCanvas.getContext('2d').drawImage(this.baseLImg, 0, 0, w, h);
+            this.baseLPattern = this.render.context.createPattern(baseLCanvas, 'repeat');
+        }
+    }
+
+    // update baseL object style
+    updateBaseLStyle() {
+        if (this.baseL && this.baseLPattern) {
+            this.baseL.render.fillStyle = this.baseLPattern;
+        }
+    }
+
+    // create baseR object style pattern
+    createBaseRPattern() {
+        if (this.baseRImg.complete && !this.baseRPattern) {
+            const w = 50;
+            const h = 50;
+            const baseRCanvas = document.createElement("CANVAS");
+            baseRCanvas.width = w;
+            baseRCanvas.height = h;
+            baseRCanvas.getContext('2d').drawImage(this.baseRImg, 0, 0, w, h);
+            this.baseRPattern = this.render.context.createPattern(baseRCanvas, 'repeat');
+        }
+    }
+
+    // update baseR object style
+    updateBaseRStyle() {
+        if (this.baseR && this.baseRPattern) {
+            this.baseR.render.fillStyle = this.baseRPattern;
+        }
     }
 
     // return object's barL and barR
