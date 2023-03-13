@@ -124,7 +124,7 @@ class Foreground {
 
     /// update level up object for animation
     updateLevelUp() {
-        let now = Date.now();
+        const now = Date.now();
         if (this.levelUp.nextTs < now) {
             this.levelUp.nextTs = now + this.levelUp.stepTs;
         } else {

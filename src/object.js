@@ -4,14 +4,14 @@ import { addScore } from './event-handler.js';
 import { getConfig } from './stages/settings.js'
 import Achievement from './stages/achievement.js';
 
-let Bodies = Matter.Bodies;
-let Body = Matter.Body;
-let Composite = Matter.Composite;
-let Constraint = Matter.Constraint;
-let Engine = Matter.Engine;
+const Bodies = Matter.Bodies;
+const Body = Matter.Body;
+const Composite = Matter.Composite;
+const Constraint = Matter.Constraint;
+const Engine = Matter.Engine;
 const Events = Matter.Events;
-let Render = Matter.Render;
-let Runner = Matter.Runner;
+const Render = Matter.Render;
+const Runner = Matter.Runner;
 const World = Matter.World;
 
 let instance;
@@ -125,19 +125,19 @@ class MatterObject {
     }
 
     buildEngine() {
-        let keepStatic = false;
+        const keepStatic = false;
         Composite.clear(this.engine.world, keepStatic);
 
-        let w = this.render.options.width;
-        let h = this.render.options.height;
+        const w = this.render.options.width;
+        const h = this.render.options.height;
 
-        let els = [];
+        const els = [];
 
         // frame
-        let frT = frameThickness(w);
+        const frT = frameThickness(w);
         // left, right, bottom of frame 
-        let frameOffsetH = h / 4;
-        let frameLength = h - frameOffsetH;
+        const frameOffsetH = h / 4;
+        const frameLength = h - frameOffsetH;
         const frameRender = {
             fillStyle: 'rgba(0, 0, 0, 0)',
             strokeStyle: 'rgba(0, 0, 0, 0.5)',
@@ -153,7 +153,7 @@ class MatterObject {
         }));
 
         // top hat
-        let hatFrameRender = {
+        const hatFrameRender = {
             fillStyle: '#D21404',
         };
         // left of hat
@@ -161,43 +161,43 @@ class MatterObject {
         // - Part C
         // - Part B
         // - Part A
-        let hatPartH = h / 12;
-        let hatPartALength = hatPartH / 0.92; // cos 22.5deg
-        let hatPartA = Bodies.rectangle(frT / 2, hatPartH * 3 - hatPartALength / 2, frT, hatPartALength, { isStatic: true, render: hatFrameRender });
+        const hatPartH = h / 12;
+        const hatPartALength = hatPartH / 0.92; // cos 22.5deg
+        const hatPartA = Bodies.rectangle(frT / 2, hatPartH * 3 - hatPartALength / 2, frT, hatPartALength, { isStatic: true, render: hatFrameRender });
         Body.rotate(hatPartA, Math.PI / 8, { x: hatPartA.position.x + frT / 2, y: hatPartA.position.y + hatPartALength / 2 });
         // find connecting point of part B from part A
         let hatPartBX = frT + hatPartALength * 0.38; // sin 22.5deg
         hatPartBX = hatPartBX - frT * 0.92; // sin 67.5deg
         let hatPartBY = hatPartH * 3 - hatPartALength * 0.92; // cos 22.5deg
         hatPartBY = hatPartBY - frT * 0.38; // cos 67.5deg
-        let hatPartBLength = hatPartH / 0.71; // cos 45deg
-        let hatPartB = Bodies.rectangle(hatPartBX + frT / 2, hatPartBY - hatPartBLength / 2, frT, hatPartBLength, { isStatic: true, render: hatFrameRender });
+        const hatPartBLength = hatPartH / 0.71; // cos 45deg
+        const hatPartB = Bodies.rectangle(hatPartBX + frT / 2, hatPartBY - hatPartBLength / 2, frT, hatPartBLength, { isStatic: true, render: hatFrameRender });
         Body.rotate(hatPartB, Math.PI / 4, { x: hatPartB.position.x - frT / 2, y: hatPartB.position.y + hatPartBLength / 2 });
         // find connecting point of part C from part B
-        let hatPartCX = hatPartBX + hatPartBLength * 0.71; // sin 45deg
-        let hatPartCY = hatPartBY - hatPartBLength * 0.71; // cos 45deg
-        let hatPartCLength = Math.sqrt(Math.pow(hatPartCX - w, 2) + Math.pow(hatPartCY, 2));
-        let hatPartCRadian = Math.atan((w - hatPartCX) / hatPartCY);
-        let hatPartC = Bodies.rectangle(hatPartCX + frT / 2, hatPartCY - hatPartCLength / 2, frT, hatPartCLength, { isStatic: true, render: hatFrameRender });
+        const hatPartCX = hatPartBX + hatPartBLength * 0.71; // sin 45deg
+        const hatPartCY = hatPartBY - hatPartBLength * 0.71; // cos 45deg
+        const hatPartCLength = Math.sqrt(Math.pow(hatPartCX - w, 2) + Math.pow(hatPartCY, 2));
+        const hatPartCRadian = Math.atan((w - hatPartCX) / hatPartCY);
+        const hatPartC = Bodies.rectangle(hatPartCX + frT / 2, hatPartCY - hatPartCLength / 2, frT, hatPartCLength, { isStatic: true, render: hatFrameRender });
         Body.rotate(hatPartC, hatPartCRadian, { x: hatPartC.position.x - frT / 2, y: hatPartC.position.y + hatPartCLength / 2 });
         // right of hat
         // Position:
         // - Part F
         // - Part E
         // - Part D
-        let hatPartDLength = hatPartALength;
-        let hatPartD = Bodies.rectangle(w - frT / 2, hatPartH * 3 - hatPartDLength / 2, frT, hatPartDLength, { isStatic: true, render: hatFrameRender });
+        const hatPartDLength = hatPartALength;
+        const hatPartD = Bodies.rectangle(w - frT / 2, hatPartH * 3 - hatPartDLength / 2, frT, hatPartDLength, { isStatic: true, render: hatFrameRender });
         Body.rotate(hatPartD, -Math.PI / 8, { x: hatPartD.position.x - frT / 2, y: hatPartD.position.y + hatPartALength / 2 });
         // find connecting point of part E from part D
-        let hatPartEX = w - frT - hatPartDLength * 0.38; // sin 22.5deg
-        let hatPartEY = hatPartH * 3 - hatPartDLength * 0.92; // cos 22.5deg
-        let hatPartE = Bodies.rectangle(hatPartEX + frT / 2, hatPartEY - hatPartH / 2, frT, hatPartH, { isStatic: true, render: hatFrameRender });
+        const hatPartEX = w - frT - hatPartDLength * 0.38; // sin 22.5deg
+        const hatPartEY = hatPartH * 3 - hatPartDLength * 0.92; // cos 22.5deg
+        const hatPartE = Bodies.rectangle(hatPartEX + frT / 2, hatPartEY - hatPartH / 2, frT, hatPartH, { isStatic: true, render: hatFrameRender });
         // find connecting point of part F from part E
-        let hatPartFX = hatPartEX;
-        let hatPartFY = hatPartEY - hatPartH;
-        let hatPartFLength = Math.sqrt(Math.pow(hatPartFX - w, 2) + Math.pow(hatPartFY, 2));
-        let hatPartFRadian = Math.atan((w - hatPartFX) / hatPartFY);
-        let hatPartF = Bodies.rectangle(hatPartFX + frT / 2, hatPartFY - hatPartFLength / 2, frT, hatPartFLength, { isStatic: true, render: hatFrameRender });
+        const hatPartFX = hatPartEX;
+        const hatPartFY = hatPartEY - hatPartH;
+        const hatPartFLength = Math.sqrt(Math.pow(hatPartFX - w, 2) + Math.pow(hatPartFY, 2));
+        const hatPartFRadian = Math.atan((w - hatPartFX) / hatPartFY);
+        const hatPartF = Bodies.rectangle(hatPartFX + frT / 2, hatPartFY - hatPartFLength / 2, frT, hatPartFLength, { isStatic: true, render: hatFrameRender });
         Body.rotate(hatPartF, hatPartFRadian, { x: hatPartF.position.x - frT / 2, y: hatPartF.position.y + hatPartFLength / 2 });
 
         this.tops = [hatPartA, hatPartB, hatPartC, hatPartD, hatPartE, hatPartF];
@@ -242,22 +242,22 @@ class MatterObject {
             strokeStyle: 'rgba(0, 0, 0, 0.5)',
             lineWidth: 1,
         };
-        let baseSide = w / 4;
-        let baseY = h - 2 * baseSide; // base starting y coordinate
-        let vertices = [
+        const baseSide = w / 4;
+        const baseY = h - 2 * baseSide; // base starting y coordinate
+        const vertices = [
             { x: frT, y: baseY },
             { x: frT, y: baseY + baseSide },
             { x: frT + baseSide, y: baseY + baseSide },
         ];
-        let comL = regularCenterOfMass(vertices);
+        const comL = regularCenterOfMass(vertices);
         this.baseL = Bodies.fromVertices(comL.x, comL.y, vertices, { isStatic: true, render: baseRenderL });
         els.push(this.baseL);
-        let vertices2 = [
+        const vertices2 = [
             { x: w - frT, y: baseY },
             { x: w - frT, y: baseY + baseSide },
             { x: w - frT - baseSide, y: baseY + baseSide },
         ];
-        let comR = regularCenterOfMass(vertices2);
+        const comR = regularCenterOfMass(vertices2);
         this.baseR = Bodies.fromVertices(comR.x, comR.y, vertices2, { isStatic: true, render: baseRenderR });
         els.push(this.baseR);
         // base pattern
@@ -267,31 +267,31 @@ class MatterObject {
         this.updateBaseRStyle();
 
         // bars
-        let barRenderL = {
+        const barRenderL = {
             fillStyle: '#03AC13',
             strokeStyle: '#028A0F',
             lineWidth: 1,
         };
-        let barRenderR = {
+        const barRenderR = {
             fillStyle: '#D21404',
             strokeStyle: '#990F02',
             lineWidth: 1,
         };
-        let barSide = w / 4;
-        let barT = frT; // bar thickness
-        let barLX = baseSide + barSide / 2 - r;
-        let barY = baseY + baseSide + barT;
-        let barL = Bodies.rectangle(barLX, barY, barSide, barT, {
+        const barSide = w / 4;
+        const barT = frT; // bar thickness
+        const barLX = baseSide + barSide / 2 - r;
+        const barY = baseY + baseSide + barT;
+        const barL = Bodies.rectangle(barLX, barY, barSide, barT, {
             chamfer: 4,
             render: barRenderL,
         });
-        let barRX = w - baseSide - barSide / 2 + r;
-        let barR = Bodies.rectangle(barRX, barY, barSide, barT, {
+        const barRX = w - baseSide - barSide / 2 + r;
+        const barR = Bodies.rectangle(barRX, barY, barSide, barT, {
             chamfer: 4,
             render: barRenderR,
         });
-        let pivotOffset = barSide / 4;
-        let barLConstraint = Constraint.create({
+        const pivotOffset = barSide / 4;
+        const barLConstraint = Constraint.create({
             pointA: { x: barLX - pivotOffset, y: barY },
             pointB: { x: -pivotOffset, y: 0 },
             bodyB: barL,
@@ -300,7 +300,7 @@ class MatterObject {
                 strokeStyle: '#028A0F',
             },
         });
-        let barRConstraint = Constraint.create({
+        const barRConstraint = Constraint.create({
             pointA: { x: barRX + pivotOffset, y: barY },
             pointB: { x: pivotOffset, y: 0 },
             bodyB: barR,
@@ -322,15 +322,15 @@ class MatterObject {
         };
         // bar stands
         const standRadius = barStandRadius(w);
-        let standDist = pivotOffset;
-        let standLX = barLX;
-        let standY = barY + standDist;
-        let standRX = barRX;
-        let standL = Bodies.circle(standLX, standY, standRadius, {
+        const standDist = pivotOffset;
+        const standLX = barLX;
+        const standY = barY + standDist;
+        const standRX = barRX;
+        const standL = Bodies.circle(standLX, standY, standRadius, {
             isStatic: true,
             render: barRenderL,
         });
-        let standR = Bodies.circle(standRX, standY, standRadius, {
+        const standR = Bodies.circle(standRX, standY, standRadius, {
             isStatic: true,
             render: barRenderR,
         });

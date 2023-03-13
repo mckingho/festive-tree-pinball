@@ -263,7 +263,7 @@ class ObjectBackground {
     }
 
     drawPot() {
-        let { dx, dy, width, height } = potGeometry(this.canvas.width, this.canvas.height);
+        const { dx, dy, width, height } = potGeometry(this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.potImg, dx, dy, width, height);
         this.potY = dy;
         this.potWidth = width;
@@ -283,10 +283,10 @@ class ObjectBackground {
     }
 
     drawSeed() {
-        let w = this.canvas.width;
-        let { width, height } = seedDimension(this.canvas.width, this.canvas.height);
-        let dx = w / 2 - width / 2;
-        let dy = this.potY - height - this.seedYOffset;
+        const w = this.canvas.width;
+        const { width, height } = seedDimension(this.canvas.width, this.canvas.height);
+        const dx = w / 2 - width / 2;
+        const dy = this.potY - height - this.seedYOffset;
         this.ctx.drawImage(this.seedImg, dx, dy, width, height);
     }
 
@@ -304,14 +304,14 @@ class ObjectBackground {
     }
 
     drawFaucet() {
-        let { dx, dy, width, height } = faucetGeometry(this.canvas.width, this.canvas.height);
+        const { dx, dy, width, height } = faucetGeometry(this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.faucetImg, dx, dy, width, height);
     }
 
     drawTrunk() {
-        let { width, height } = trunkDimension(this.potWidth);
-        let dx = this.canvas.width / 2 - width / 2;
-        let dy = this.potY - height;
+        const { width, height } = trunkDimension(this.potWidth);
+        const dx = this.canvas.width / 2 - width / 2;
+        const dy = this.potY - height;
         this.ctx.drawImage(this.trunkImg, dx, dy, width, height);
     }
 

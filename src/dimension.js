@@ -58,10 +58,10 @@ function barStandRadius(width) {
 // parms: board width, height
 // returns: {dx, dy, height, width}
 function potGeometry(width, height) {
-    let potWidth = Math.floor(width / 6);
-    let potHeight = potWidth;
-    let dx = width / 2 - potWidth / 2;
-    let dy = height / 4 * 3;
+    const potWidth = Math.floor(width / 6);
+    const potHeight = potWidth;
+    const dx = width / 2 - potWidth / 2;
+    const dy = height / 4 * 3;
     return {
         dx,
         dy,
@@ -72,7 +72,7 @@ function potGeometry(width, height) {
 
 // returns seed width, height
 function seedDimension(width, height) {
-    let seedWidth = Math.floor(width / 15);
+    const seedWidth = Math.floor(width / 15);
     return {
         width: seedWidth,
         height: seedWidth,
@@ -85,8 +85,8 @@ function seedDimension(width, height) {
 function faucetGeometry(width, height) {
     const faucetHeight = Math.floor(height / 12);
     const faucetWidth = faucetHeight;
-    let dx = width / 2 - faucetWidth / 2;
-    let dy = height / 12 * 2 - faucetHeight / 2; // at top part
+    const dx = width / 2 - faucetWidth / 2;
+    const dy = height / 12 * 2 - faucetHeight / 2; // at top part
     return {
         dx,
         dy,
@@ -98,8 +98,8 @@ function faucetGeometry(width, height) {
 // returns faucet's lever bar's width, length,
 // params: board width, faucet height
 function leverDimension(width, faucetHeight) {
-    let barWidth = Math.max(MIN_LEVER_WIDTH, Math.floor(width / 100));
-    let barLength = faucetHeight;
+    const barWidth = Math.max(MIN_LEVER_WIDTH, Math.floor(width / 100));
+    const barLength = faucetHeight;
     return {
         width: barWidth,
         length: barLength,
@@ -108,7 +108,7 @@ function leverDimension(width, faucetHeight) {
 
 // returns trunk width, height
 function trunkDimension(potWidth) {
-    let trunkWidth = Math.floor(potWidth * 2 / 3);
+    const trunkWidth = Math.floor(potWidth * 2 / 3);
     return {
         width: trunkWidth,
         height: trunkWidth,
