@@ -15,6 +15,10 @@ class Score {
     }
 
     add(value) {
+        if (isNaN(value)) {
+            console.error('invalid add score', value);
+            return;
+        }
         this.value += value;
     }
 
