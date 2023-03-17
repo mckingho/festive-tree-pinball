@@ -73,9 +73,10 @@ function potGeometry(width, height) {
 // returns seed width, height
 function seedDimension(width, height) {
     const seedWidth = Math.floor(width / 15);
+    const seedHeight = seedWidth / 4 * 5; // ref to image ratio
     return {
         width: seedWidth,
-        height: seedWidth,
+        height: seedHeight,
     };
 }
 
