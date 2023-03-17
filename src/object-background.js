@@ -28,7 +28,7 @@ class ObjectBackground {
             this.potImg.src = 'resources/images/pot.png';
 
             this.seedImg = new Image();
-            this.seedImg.src = 'resources/images/pinecone.png';
+            this.seedImg.src = 'resources/images/pinecone.svg';
 
             this.faucetImg = new Image();
             this.faucetImg.src = 'resources/images/faucet.png';

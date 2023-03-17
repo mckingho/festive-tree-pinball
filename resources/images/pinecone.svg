@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate"
+    viewBox="0 0 82 102" width="82" height="102">
+    <title>pinecone</title>
+    <g id="top">
+        <path d="M 41 2 Q 27.9 17.25 30 25 L 39 28 L 50 19 Q 50 10 41 2 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 41 2.8 Q 28.9 17 30.2 24.7 L 33 25.5 Q 33.9 17 45 7 Q 43 4.1 41 2.8 Z" fill="#EDC389" />
+    </g>
+    <g id="right1">
+        <path d="M 68 18 Q 50 15.5 38 26 L 46 35 L 62 27 Q 64 19.5 68 18 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 66.4 18.3 Q 50 16.5 38.6 26.1 L 41.4 29 Q 50 22 64.4 20.3 Z" fill="#EDC389" />
+    </g>
+    <g id="left1">
+        <path d="M 15 25 C 30 25 38 21 46 35 L 35 45 L 20 40 Q 17.5 35.5 15 25 Z" stroke="#000000" fill="#381E07" />
+        <path
+            d="M 15.5 25.5 C 36.5 24 37.2 25.5 42.4 30.6 Q 33.5 27.5 19.8 30 Q 19.5 33 20.3 39.5 Q 18 35.3  15.5 25.5 Z"
+            fill="#EDC389" />
+    </g>
+    <g id="right2">
+        <path d="M 67 26 Q 52.8 28 34 44 L 46 57 L 61 50 Q 67.8 38 67 26 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 66.5 26.6 Q 53.4 28.6 34.7 44 L 38.7 48.3 Q 52.5 34.5 66.5 29.2 L 66.5 26.5 Z" fill="#EDC389" />
+    </g>
+    <g id="left2">
+        <path d="M 8 39 Q 34 38.4 47 55 L 36 64 L 14 57 Q 10 50 8 39 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 8.6 39.5 Q 30 39.3 41.5 50 Q 28 44 12 43 Q 12.3 50 14.4 56.6 Q 10.5 50.5 8.6 39.5 Z"
+            fill="#EDC389" />
+    </g>
+    <g id="right3">
+        <path d="M 77 46 Q 54 49 34 62 L 49 76 L 72 65 Q 75.5 60 77 46 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 76.4 46.6 Q 54.5 49.5 34.8 62.1 L 39.1 66 Q 55.5 53.5 76 50 L 76.4 46.7 Z" fill="#EDC389" />
+    </g>
+    <g id="left3">
+        <path d="M 4 57 Q 36.6 55.5 49 76 L 39 85 L 11 74 Q 6 68 4 57 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 4.6 57.5 Q 30 56.5 42.9 69 Q 28 61 7.7 60.5 Q 8.5 68.95 11.3 73.5 Q 6.5 68 4.6 57.5 Z"
+            fill="#EDC389" />
+    </g>
+    <g id="right4">
+        <path d="M 81 62 Q 57 69 37 84 L 51 100 Q 82 88 81 62 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 80.5 62.7 Q 57.5 69.5 37.7 84.2 L 41.9 88.8 Q 56.5 75 80.4 66 L 80.5 62.7 Z" fill="#EDC389" />
+    </g>
+    <g id="left4">
+        <path d="M 2 72 Q 35.4 77 56 100 Q 7 107 2 72 Z" stroke="#000000" fill="#381E07" />
+        <path d="M 2.6 72.6 Q 29.9 77 47 92 Q 32 81.7 5.2 75.8 Q 5.6 82 6.7 85 Q  4 80 2.6 72.6 Z" fill="#EDC389" />
+    </g>
+</svg>
