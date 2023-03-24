@@ -2,6 +2,10 @@
     font-family: Helvetica, Arial, sans-serif
 }
 
+body {
+    background-color: #0f0f0f;
+}
+
 #board-container {
     margin: auto;
 }
