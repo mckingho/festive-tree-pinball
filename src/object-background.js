@@ -301,6 +301,13 @@ class ObjectBackground {
 
     drawPot() {
         const { dx, dy, width, height } = potGeometry(this.canvas.width, this.canvas.height);
+        // pot shadow
+        const shadowYR = 4;
+        this.ctx.fillStyle = 'rgba(0, 0, 0, .3)';
+        this.ctx.beginPath();
+        this.ctx.ellipse(dx + width / 2, dy + height, width / 2, shadowYR, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+        // pot
         this.ctx.drawImage(this.potImg, dx, dy, width, height);
         this.potY = dy;
         this.potWidth = width;
