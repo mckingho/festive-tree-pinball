@@ -1,5 +1,6 @@
 import { frameThickness, potGeometry, seedDimension, faucetGeometry, trunkDimension, leavesGeometry, giftGeometry } from './dimension.js';
 import { getConfig } from './stages/settings.js'
+import { findXFrom2PointsOnOneLineAndY } from './util.js';
 
 let instance;
 
@@ -66,6 +67,9 @@ class ObjectBackground {
             // init which and how leaves render
             this.leavesLoadIndices = Array(4).fill().map(() => Math.floor(Math.random() * 8));
 
+            // for floor drawing
+            this.floorPoints = [];
+
             // for calendar display
             const today = new Date();
             this.date1 = Math.floor(today.getDate() / 10);
@@ -84,6 +88,8 @@ class ObjectBackground {
         // Need to set canvas dimension before draw because it may be resized
         this.canvas.width = width;
         this.canvas.height = height;
+
+        this.calculateFloor();
     }
 
     draw(stage = 0) {
@@ -93,6 +99,8 @@ class ObjectBackground {
         this.ctx.clearRect(0, 0, w, h);
 
         this.drawWall();
+
+        this.drawFloor();
 
         this.drawLoadedFrame();
 
@@ -139,21 +147,50 @@ class ObjectBackground {
     drawWall() {
         const w = this.canvas.width;
         const h = this.canvas.height;
+        this.ctx.fillStyle = 'rgba(74, 112, 86, 1)';
+        this.ctx.fillRect(0, 0, w, h);
+    }
 
-        if (!this.wallGradients) {
-            this.wallGradients = [0.9, 0.95].map((alpha) => {
-                const grd = this.ctx.createLinearGradient(0, 0, 0, h);
-                grd.addColorStop(0, 'rgba(74, 112, 86, 1)');
-                grd.addColorStop(1, 'rgba(74, 112, 86, ' + alpha + ')');
-                return grd;
-            });
+    // calculate the line points for drawing floor pattern
+    calculateFloor() {
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+
+        const upIntervals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+        const upXs = upIntervals.map((x) => x * w);
+        const { dy: potDy, height: potHeight } = potGeometry(w, h);
+        const floorOffset = potHeight / 5; // offset to higher than pot bottom
+        const upY = potDy + potHeight - floorOffset;
+        const convergeX = w / 2;
+        const convergeY = 0;
+        const lowXs = upXs.map((x) => findXFrom2PointsOnOneLineAndY(x, upY, convergeX, convergeY, h));
+
+        this.floorPoints = [];
+        for (let i = 0; i < lowXs.length; i += 1) {
+            this.floorPoints.push({ x1: upXs[i], y1: upY, x2: lowXs[i], y2: h });
         }
+    }
 
-        const cols = 5;
-        const colW = Math.ceil(w / cols);
-        for (let i = 0; i < cols; i += 1) {
-            this.ctx.fillStyle = this.wallGradients[i % 2];
-            this.ctx.fillRect(colW * i, 0, colW, h);
+    drawFloor() {
+        if (this.floorPoints.length > 0) {
+            const w = this.canvas.width;
+            const { y1: dy, y2: h } = this.floorPoints[0];
+            this.ctx.fillStyle = '#845937';
+            this.ctx.fillRect(0, dy, w, h - dy);
+            this.ctx.strokeStyle = '#59321D';
+            // horizontal line
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, dy);
+            this.ctx.lineTo(w, dy);
+            this.ctx.stroke();
+            for (const pt of this.floorPoints) {
+                const { x1, y1, x2, y2 } = pt;
+                // floor pattern
+                this.ctx.beginPath();
+                this.ctx.moveTo(x1, y1);
+                this.ctx.lineTo(x2, y2);
+                this.ctx.stroke();
+            }
         }
     }
 
