@@ -1,7 +1,7 @@
 /*
 Screen panel's functions
 */
-import Ach from './stages/achievement.json' assert { type: "json" };
+import Ach from './stages/achievement.json' with { type: "json" };
 import Achievement from './stages/achievement.js';
 import Score from './score.js';
 

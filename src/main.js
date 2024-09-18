@@ -3,7 +3,7 @@ import MatterObject from './object.js';
 import ObjectBackground from './object-background.js';
 import { handleKeyDown, handleClick } from './controller.js';
 import Foreground from './foreground.js';
-import env from './env.json' assert { type: "json" };
+import env from './env.json' with { type: "json" };
 import { showScreen, updateScreenPanel } from './screen.js';
 import Achievement from './stages/achievement.js';
 import Score from './score.js';

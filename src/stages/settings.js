@@ -1,4 +1,4 @@
-import settings from './settings.json' assert { type: "json" };
+import settings from './settings.json' with { type: "json" };
 
 function getConfig(stage) {
     const stageKey = settings.index[stage];
