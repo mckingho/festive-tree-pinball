@@ -81,13 +81,24 @@ function showScreen() {
 function registerHideListener() {
     if (!hideListenerFn) {
         const el = document.getElementById('screen');
-        hideListenerFn = () => {
+        hideListenerFn = (event) => {
+            if (event.type === 'keydown') {
+                if (event.keyCode !== 32 && event.keyCode !== 13) {
+                    // not spacebar or enter
+                    return;
+                }
+            } else if (event.type !== 'click') {
+                // not play button click
+                return;
+            }
+
             hideScreen();
 
             // closing screen will emit start game event
             window.dispatchEvent(new Event('customStart'));
         };
-        el.addEventListener('click', hideListenerFn);
+        const playBtn = document.getElementById('screen-play');
+        playBtn.addEventListener('click', hideListenerFn);
         el.addEventListener('keydown', hideListenerFn);
     }
 }
